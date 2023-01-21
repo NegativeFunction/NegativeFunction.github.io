@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"negativefunction.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Nodejs1. 预科准备 前端开发工具 Nodejs安装 ES6新语法糖 npm包管理器 Babel –新一代JavaScript编译器 模块化管理 Webpack打包 编译 快速构建nodejs项目 –vue-admin-element实例应用 快速构建nodejs项目antd   前端工具vscode   下载安装vscode 傻瓜式安装 左侧工具栏 从上到下依次为 目录结构 代码搜索及替换">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack">
+<meta property="og:url" content="https://negativefunction.github.io/2023/01/21/webpack/index.html">
+<meta property="og:site_name" content="Welcome To Lin&#39;s World">
+<meta property="og:description" content="Nodejs1. 预科准备 前端开发工具 Nodejs安装 ES6新语法糖 npm包管理器 Babel –新一代JavaScript编译器 模块化管理 Webpack打包 编译 快速构建nodejs项目 –vue-admin-element实例应用 快速构建nodejs项目antd   前端工具vscode   下载安装vscode 傻瓜式安装 左侧工具栏 从上到下依次为 目录结构 代码搜索及替换">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20220925143327685.png">
+<meta property="article:published_time" content="2023-01-20T23:24:21.000Z">
+<meta property="article:modified_time" content="2023-01-20T23:24:23.896Z">
+<meta property="article:author" content="Linyuxuan">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20220925143327685.png">
+
+<link rel="canonical" href="https://negativefunction.github.io/2023/01/21/webpack/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>webpack | Welcome To Lin's World</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Welcome To Lin's World</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">The Future Will Come</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://negativefunction.github.io/2023/01/21/webpack/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Linyuxuan">
+      <meta itemprop="description" content="Hope Sometimes Love Brain">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Welcome To Lin's World">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          webpack
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-01-21 07:24:21 / Modified: 07:24:23" itemprop="dateCreated datePublished" datetime="2023-01-21T07:24:21+08:00">2023-01-21</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Nodejs"><a href="#Nodejs" class="headerlink" title="Nodejs"></a>Nodejs</h1><h2 id="1-预科准备"><a href="#1-预科准备" class="headerlink" title="1. 预科准备"></a>1. 预科准备</h2><ol>
+<li>前端开发工具</li>
+<li>Nodejs安装</li>
+<li>ES6新语法糖</li>
+<li>npm包管理器</li>
+<li>Babel –新一代JavaScript编译器</li>
+<li>模块化管理</li>
+<li>Webpack打包 编译</li>
+<li>快速构建nodejs项目 –vue-admin-element实例应用</li>
+<li>快速构建nodejs项目antd</li>
+</ol>
+<blockquote>
+<p><strong>前端工具vscode</strong></p>
+</blockquote>
+<ol>
+<li>下载安装vscode</li>
+<li>傻瓜式安装</li>
+<li>左侧工具栏 从上到下依次为 目录结构 代码搜索及替换 版本控制 运行及调试 插件市场</li>
+<li>emment 自动补全 语法学习</li>
+</ol>
+<blockquote>
+<p><strong>Nodejs安装与应用</strong></p>
+</blockquote>
+<p>Nodejs是一个JavaScript运行的服务端开发平台 使JavaScript成为与php python perl ruby 等服务端语言平起平坐的脚本语言 由Ryan Dahl开发 实质是将Chrome V8引擎进行封装</p>
+<p>通俗讲Nodejs就是运行在服务端的JavaScript Nodejs是一个基于Chrom JavaScript 运行时建立的一个平台 底层架构是 JavaScript 文件后缀为.js</p>
+<p>同时Nodejs 是一个 事件驱动 I&#x2F;O 的服务端JavaScript环境 基于Google的V8引擎 V8引擎执行JavaScript的速度非常快 性能非常好</p>
+<ol>
+<li><p>.msi文件 傻瓜式安装</p>
+</li>
+<li><p><code>node -v</code> &#96;&#96;npm -v&#96; 查看 安装后的版本 测试是否安装成功</p>
+</li>
+<li><p>Nodejs参考文献</p>
+<ul>
+<li><p>官网 <a target="_blank" rel="noopener" href="http://nodejs.cn/">http://nodejs.cn/</a></p>
+</li>
+<li><p>下载地址 <a target="_blank" rel="noopener" href="https://nodejs.org/zh-cn/download">https://nodejs.org/zh-cn/download</a></p>
+</li>
+<li><p>帮助文档 <a target="_blank" rel="noopener" href="https://nodejs.org/zh-cn/docs">https://nodejs.org/zh-cn/docs</a></p>
+</li>
+<li><p>关于Nodejs <a target="_blank" rel="noopener" href="https://nodejs.org/zh-cn/about">https://nodejs.org/zh-cn/about</a></p>
+</li>
+</ul>
+</li>
+<li><p>.js文件 为JavaScript脚本 直接终端 <code>node chapter01</code> 即可运行</p>
+</li>
+</ol>
+<table>
+    <thead>
+        <td></td>
+        <td colspan="2"><b>.java</b></td>
+        <td colspan="2"><b>.js</b></td>
+    </thead>
+    <tbody>
+        <tr>
+            <td rowspan="4">代码运行流程</td>
+            <td>API</td>
+            <td rowspan="2">jdk</td>
+            <td>API</td>
+            <td rowspan="2">Nodejs</td>
+        </tr>
+        <tr>
+            <td>JVM --> 将.class字节码文件解析给操作系统</td>
+            <td>Chrome V8引擎 --> 将.js文件解释给操作系统</td>
+        </tr>
+        <tr>
+            <td>操作系统</td>
+            <td></td>
+            <td>操作系统</td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+
+<h2 id="2-Nodejs-实现请求响应"><a href="#2-Nodejs-实现请求响应" class="headerlink" title="2. Nodejs 实现请求响应"></a>2. Nodejs 实现请求响应</h2><blockquote>
+<p><strong>require</strong></p>
+</blockquote>
+<p>require 是导入模块 类似于 <code>import java.io</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p><strong>请求响应</strong></p>
+</blockquote>
+<p>请求响应事件步骤：</p>
+<ol>
+<li>创建一个httpserver服务</li>
+<li>监听一个端口 8888</li>
+<li>启动运行服务node httpserver.js</li>
+<li>在浏览器中访问<a target="_blank" rel="noopener" href="http://localhost:8888/%E6%B5%8B%E8%AF%95">http://localhost:8888/测试</a></li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * @Description: </span></span><br><span class="line"><span class="comment"> * @Version: 1.0</span></span><br><span class="line"><span class="comment"> * @Autor: negativeFunction</span></span><br><span class="line"><span class="comment"> * @Date: 2022-09-24 00:27:29</span></span><br><span class="line"><span class="comment"> * @FilePath: \Test\chapter02.js</span></span><br><span class="line"><span class="comment"> * @LastEditors: negativeFunction</span></span><br><span class="line"><span class="comment"> * @LastEditTime: 2022-09-24 08:35:26</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">// 导入模块 require 类似于 import java.io</span></span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1. 创建一个HTTP server服务</span></span><br><span class="line">http.<span class="title function_">createServer</span>(<span class="keyword">function</span>(<span class="params">request, response</span>) &#123;</span><br><span class="line">    <span class="comment">// 浏览器如何识别 hello world</span></span><br><span class="line">    response.<span class="title function_">writeHead</span>(<span class="number">200</span>, &#123;<span class="string">&#x27;Content-type&#x27;</span>:<span class="string">&#x27;text/html&#x27;</span>&#125;);  <span class="comment">// 含义 --告知浏览器将以 text/plain 去解析hello world 这段数据</span></span><br><span class="line">    <span class="comment">// 给浏览器输出内容 若上句解析为 text/html 就会以html去解析 text/plain</span></span><br><span class="line">    response.<span class="title function_">end</span>(<span class="string">&quot;&lt;h1&gt;hello world&lt;/h1&gt;&quot;</span>);</span><br><span class="line">&#125;).<span class="title function_">listen</span>(<span class="number">8888</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;已启动端口为8888 的http服务 --&gt; chapter02 访问路径为: http://localhost:8888/&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 监听一个端口8888</span></span><br><span class="line"><span class="comment">// 3. 启动运行服务 node httpserver.js</span></span><br><span class="line"><span class="comment">// 使用node 运行js 时 可直接 node httpserver 省去js后缀</span></span><br><span class="line"><span class="comment">// 4. 在浏览器中访问http://localhost:8888/测试</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="3-Nodejs-操作MySQL数据库"><a href="#3-Nodejs-操作MySQL数据库" class="headerlink" title="3. Nodejs 操作MySQL数据库"></a>3. Nodejs 操作MySQL数据库</h2><p>参考文档：<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/mysql">https://www.npmjs.com/package/mysql</a></p>
+<p>操作步骤：</p>
+<ol>
+<li>安装mysql 第三方依赖 <code>npm install mysql</code></li>
+<li>创建db.js进行操作数据库代码编写<ol>
+<li>导入mysql依赖包</li>
+<li>创建一个mysql的Connection对象</li>
+<li>配置数据连接信息</li>
+<li>开辟连接</li>
+<li>执行CRUD</li>
+<li>关闭连接</li>
+</ol>
+</li>
+<li>运行 <code>node db.js</code> 测试<br>使用node 运行js 时 可直接 <code>node httpserver</code> 省去js后缀</li>
+</ol>
+<h2 id="4-ES6概述"><a href="#4-ES6概述" class="headerlink" title="4. ES6概述"></a>4. ES6概述</h2><blockquote>
+<p><strong>ES6概述</strong></p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/ECMAScript/1889420?fromModule=lemma_inlink">ECMAScript</a> 6（简称ES6）是于2015年6月正式发布的<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/JavaScript/321142?fromModule=lemma_inlink">JavaScript</a>语言的标准，正式名为ECMAScript 2015（ES2015）。它的目标是使得JavaScript语言可以用来编写复杂的大型应用程序，成为企业级开发语言</p>
+<p><strong>ECMAScript</strong>是一种由<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/Ecma%E5%9B%BD%E9%99%85?fromModule=lemma_inlink">Ecma国际</a>（前身为<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%AC%A7%E6%B4%B2%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%88%B6%E9%80%A0%E5%95%86%E5%8D%8F%E4%BC%9A/2052072?fromModule=lemma_inlink">欧洲计算机制造商协会</a>，European Computer Manufacturers Association）通过ECMA-262标准化的脚本<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80?fromModule=lemma_inlink">程序设计语言</a>。这种语言在<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E4%B8%87%E7%BB%B4%E7%BD%91?fromModule=lemma_inlink">万维网</a>上应用广泛，它往往被称为<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/JavaScript?fromModule=lemma_inlink">JavaScript</a>或<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/JScript?fromModule=lemma_inlink">JScript</a>，所以它可以理解为是JavaScript的一个标准,但实际上后两者是ECMA-262标准的实现和扩展。</p>
+<p>ECMAScript是由网景的布兰登·艾奇开发的一种脚本语言的标准化规范；最初命名为Mocha，后来改名为LiveScript，最后重命名为JavaScript。1995年12月，升阳与网景联合发表了JavaScript。1996年11月，网景公司将JavaScript提交给<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%AC%A7%E6%B4%B2%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%88%B6%E9%80%A0%E5%95%86%E5%8D%8F%E4%BC%9A/2052072?fromModule=lemma_inlink">欧洲计算机制造商协会</a>进行标准化。ECMA-262的第一个版本于1997年6月被Ecma组织采纳。ECMA Script是ECMA-262标准化的脚本语言的名称。尽管JavaScript和JScript与ECMAScript兼容，但包含超出ECMA Script的功能。</p>
+<p>ECMAScript是一种可以在宿主环境中执行计算并能操作可计算对象的基于对象的<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80/2317999?fromModule=lemma_inlink">程序设计语言</a>。ECMAScript最先被设计成一种Web脚本语言，用来支持Web页面的动态表现以及为基于Web的客户机—服务器架构提供服务器端的计算能力。但作为一种脚本语言， ECMAScript具备同其他脚本语言一样的性质，即“用来操纵、定制一个已存在系统所提供的功能，以及对其进行自动化”。</p>
+<p>2022年6月22日，第 123 届 ECMA 大会批准了 <a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=ECMAScript&spm=1001.2101.3001.7020">ECMAScript</a> 2022 语言规范，这意味着它现在正式成为标准。下面就来看看 ECMAScript 2022</p>
+<p><strong>ECMAScript版本发展</strong></p>
+<ul>
+<li>1998.6 ES2.0发布</li>
+<li>1999.1 ES3.0发布</li>
+<li>2007.10 ES4.0起草</li>
+<li>2009.12 ES5.0发布</li>
+<li>2011.6 ES5.1发布</li>
+<li>2015.6 ES6.0发布</li>
+</ul>
+<h3 id="4-1-ES6语法：let-和-const命令"><a href="#4-1-ES6语法：let-和-const命令" class="headerlink" title="4.1 ES6语法：let 和 const命令"></a>4.1 ES6语法：let 和 const命令</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="comment">// 传统定义变量和常量的方式 统一使用 var</span></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">var</span> name = <span class="string">&quot;nihaoya&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">var</span> link = <span class="string">&quot;www.baidu.com&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">var</span> <span class="variable constant_">PI</span> = <span class="title class_">Math</span>.<span class="property">PI</span>;</span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">console</span>.<span class="title function_">log</span>(name);</span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">console</span>.<span class="title function_">log</span>(link);</span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable constant_">PI</span>);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="comment">// ES6 定义方式 区分了常量和变量</span></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">let</span> name2 = <span class="string">&quot;nibuhaoya&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">let</span> link2 = <span class="string">&quot;www.weibo.com&quot;</span>;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="comment">// 定义常量</span></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">const</span> <span class="title class_">PI2</span> = <span class="title class_">Math</span>.<span class="property">PI</span>;</span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">console</span>.<span class="title function_">log</span>(name2);</span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">console</span>.<span class="title function_">log</span>(link2);</span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">PI2</span>);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="comment">// let 与 const 解决</span></span></span><br><span class="line"><span class="language-javascript">    <span class="comment">// 1. var 变量穿透问题</span></span></span><br><span class="line"><span class="language-javascript">    <span class="comment">// 2. 常量修改问题</span></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">console</span>.<span class="title function_">log</span>(i);</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="comment">// 再次console.log 就会造成变量穿透问题</span></span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">console</span>.<span class="title function_">log</span>(i);</span></span><br><span class="line"><span class="language-javascript">    <span class="comment">// 使用let替换就能解决 穿透 --&gt; 会直接报错 i未定义</span></span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="variable constant_">PI</span> = <span class="number">100</span>;</span></span><br><span class="line"><span class="language-javascript">    <span class="title class_">PI2</span> = <span class="number">100</span>;</span></span><br><span class="line"><span class="language-javascript">    <span class="comment">// 注意在实际开发和生产中 如果是小程序 uniapp 或者一些脚手架 可以大胆使用let 和 const</span></span></span><br><span class="line"><span class="language-javascript">    <span class="comment">// 但是如果在web开发中 不建议使用 还是建议使用var 因为在低版本浏览器中 并不支持 let 和 const</span></span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="4-2-ES6语法：模板字符串"><a href="#4-2-ES6语法：模板字符串" class="headerlink" title="4.2 ES6语法：模板字符串"></a>4.2 ES6语法：模板字符串</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">var</span> person = &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="attr">name</span>: <span class="string">&quot;lin&quot;</span>,</span></span><br><span class="line"><span class="language-javascript">        <span class="attr">address</span>: <span class="string">&quot;hello world&quot;</span>,</span></span><br><span class="line"><span class="language-javascript">        <span class="attr">link</span>: <span class="string">&quot;www.baidu.com&quot;</span></span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">let</span> address = <span class="string">&quot;传统js I am &quot;</span> + person.<span class="property">name</span> + <span class="string">&quot;I want to say &quot;</span> + person.<span class="property">address</span>;</span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">console</span>.<span class="title function_">log</span>(address);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">let</span> address2 = <span class="string">`ES6 I am <span class="subst">$&#123;person.name&#125;</span> I want to say <span class="subst">$&#123;person.address&#125;</span>`</span>;</span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">console</span>.<span class="title function_">log</span>(address2);</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="4-3-ES6语法：函数默认参数与箭头函数"><a href="#4-3-ES6语法：函数默认参数与箭头函数" class="headerlink" title="4.3 ES6语法：函数默认参数与箭头函数"></a>4.3 ES6语法：函数默认参数与箭头函数</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="comment">// 默认函数</span></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">function</span> <span class="title function_">f</span>(<span class="params">a, b</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">return</span> a + b;</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">var</span> result = <span class="title function_">f</span>(<span class="number">199</span>, <span class="number">233</span>);</span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">console</span>.<span class="title function_">log</span>(result);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="comment">// 箭头函数 --重点 在比如 小程序 uniapp 常见脚手架中 大量使用</span></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">const</span> <span class="title function_">x</span> = (<span class="params">a, b</span>) =&gt; &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">return</span> a + b;</span></span><br><span class="line"><span class="language-javascript">    &#125;;</span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">x</span>(<span class="number">12</span>, <span class="number">44</span>));</span></span><br><span class="line"><span class="language-javascript">    <span class="comment">// 写法一</span></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">var</span> <span class="title function_">y</span> = (<span class="params">a, b</span>) =&gt; &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">return</span> a + b;</span></span><br><span class="line"><span class="language-javascript">    &#125;;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="comment">// 写法二</span></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">var</span> <span class="title function_">sum</span> = (<span class="params">a, b</span>) =&gt; a + b;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">y</span>(<span class="number">132</span>, <span class="number">44</span>));</span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">sum</span>(<span class="number">1352</span>, <span class="number">44</span>));</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>];</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">var</span> answer = arr.<span class="title function_">map</span>(<span class="function">(<span class="params">a, b</span>) =&gt;</span> a + b);</span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">console</span>.<span class="title function_">log</span>(answer);</span></span><br><span class="line"><span class="language-javascript">    <span class="comment">// 如果 参数 只有一个 可以 括号也省去</span></span></span><br><span class="line"><span class="language-javascript">    <span class="comment">// 多个参数 则不能省去</span></span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="4-4-ES6语法：对象初始化简写"><a href="#4-4-ES6语法：对象初始化简写" class="headerlink" title="4.4 ES6语法：对象初始化简写"></a>4.4 ES6语法：对象初始化简写</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment"> * @Description: </span></span><br><span class="line"><span class="comment"> * @Version: 1.0</span></span><br><span class="line"><span class="comment"> * @Autor: negativeFunction</span></span><br><span class="line"><span class="comment"> * @Date: 2022-07-28 17:53:32</span></span><br><span class="line"><span class="comment"> * @FilePath: \Demo01\demo02.html</span></span><br><span class="line"><span class="comment"> * @LastEditors: negativeFunction</span></span><br><span class="line"><span class="comment"> * @LastEditTime: 2022-07-28 18:00:35</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.w3.org/1999/html&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;X-UA-Compatible&quot;</span> <span class="attr">content</span>=<span class="string">&quot;IE=edge&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>账号: <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;account&quot;</span> <span class="attr">id</span>=<span class="string">&quot;account&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>密码: <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;password&quot;</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span> <span class="attr">id</span>=<span class="string">&quot;password&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;button&quot;</span> <span class="attr">id</span>=<span class="string">&quot;loginbtn&quot;</span> <span class="attr">value</span>=<span class="string">&quot;login&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="comment">// 案例</span></span></span><br><span class="line"><span class="language-javascript">        <span class="comment">// document.getElementById(&quot;loginbtn&quot;).onclick = function () &#123;&#125;</span></span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        $(<span class="string">&quot;#loginbtn&quot;</span>).<span class="title function_">on</span>(<span class="string">&quot;click&quot;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">var</span> account = $(<span class="string">&quot;#account&quot;</span>).<span class="title function_">val</span>();</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">var</span> password = $(<span class="string">&quot;#password&quot;</span>).<span class="title function_">val</span>();</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">            <span class="comment">// 对象简写 应用场景</span></span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">var</span> params = &#123;account, password&#125;;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">            <span class="comment">// 执行异步请求</span></span></span><br><span class="line"><span class="language-javascript">            $.<span class="title function_">ajax</span>(&#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">type</span>: <span class="string">&quot;post&quot;</span>,</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">url</span>: <span class="string">&quot;xxx&quot;</span>,</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">data</span>: params,</span></span><br><span class="line"><span class="language-javascript">                <span class="title function_">success</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;abc&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">                &#125;</span></span><br><span class="line"><span class="language-javascript">            &#125;)</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        &#125;);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="comment">// 传统对象</span></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">let</span> info = &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="attr">title</span>: <span class="string">&quot;hello world&quot;</span>,</span></span><br><span class="line"><span class="language-javascript">            <span class="attr">link</span>: <span class="string">&quot;www.baidu.com&quot;</span>,</span></span><br><span class="line"><span class="language-javascript">            <span class="title class_">Autor</span>: <span class="string">&quot;lin&quot;</span>,</span></span><br><span class="line"><span class="language-javascript">            <span class="attr">goto</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;hello&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">            &#125;</span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">console</span>.<span class="title function_">log</span>(info);</span></span><br><span class="line"><span class="language-javascript">        info.<span class="title function_">goto</span>();</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">console</span>.<span class="title function_">log</span>(info.<span class="property">title</span>);</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">console</span>.<span class="title function_">log</span>(info.<span class="property">link</span>);</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">console</span>.<span class="title function_">log</span>(info.<span class="property">Autor</span>);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="comment">/*</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">        * ES6 简写</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">        * js对象是以 key:value 键值对存在</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">        * 1. 如果key和变量的名字一致 可以只定义一次</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">        * 2. 如果value 是一个函数 可以讲 `:function` 去掉 只剩下 `()` 即可</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">        * */</span></span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">console</span>.<span class="title function_">info</span>(<span class="string">&quot;------------------------------------------&quot;</span>);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> link2 = <span class="string">&quot;www.4399.com&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> title2 = <span class="string">&quot;4399&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">let</span> info2 = &#123;</span></span><br><span class="line"><span class="language-javascript">            title2,</span></span><br><span class="line"><span class="language-javascript">            link2,</span></span><br><span class="line"><span class="language-javascript">            <span class="title function_">go</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;nishigedashagua&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">            &#125;</span></span><br><span class="line"><span class="language-javascript">        &#125;;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">console</span>.<span class="title function_">log</span>(info2);</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">console</span>.<span class="title function_">log</span>(info2.<span class="property">title2</span>);</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">console</span>.<span class="title function_">log</span>(info2.<span class="property">link2</span>);</span></span><br><span class="line"><span class="language-javascript">        info2.<span class="title function_">go</span>();</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="4-5-ES6语法：对象解构"><a href="#4-5-ES6语法：对象解构" class="headerlink" title="4.5 ES6语法：对象解构"></a>4.5 ES6语法：对象解构</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment"> * @Description: </span></span><br><span class="line"><span class="comment"> * @Version: 1.0</span></span><br><span class="line"><span class="comment"> * @Autor: negativeFunction</span></span><br><span class="line"><span class="comment"> * @Date: 2022-07-28 17:53:32</span></span><br><span class="line"><span class="comment"> * @FilePath: \Demo01\demo02.html</span></span><br><span class="line"><span class="comment"> * @LastEditors: negativeFunction</span></span><br><span class="line"><span class="comment"> * @LastEditTime: 2022-07-28 18:00:35</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;X-UA-Compatible&quot;</span> <span class="attr">content</span>=<span class="string">&quot;IE=edge&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="comment">/*</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">        * 对象是以 key: value 的形式存在</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">        * 获取对象属性和方法的方式有两种</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">        * 1. 通过 .</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">        * 2. 通过 []</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">        * */</span></span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> link2 = <span class="string">&quot;www.4399.com&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> title2 = <span class="string">&quot;4399&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">let</span> info2 = &#123;</span></span><br><span class="line"><span class="language-javascript">            title2,</span></span><br><span class="line"><span class="language-javascript">            link2,</span></span><br><span class="line"><span class="language-javascript">            <span class="title function_">go</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;nishigedashagua&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">            &#125;</span></span><br><span class="line"><span class="language-javascript">        &#125;;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">console</span>.<span class="title function_">log</span>(info2);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="comment">// 通过 .</span></span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">console</span>.<span class="title function_">log</span>(info2.<span class="property">title2</span>);</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">console</span>.<span class="title function_">log</span>(info2.<span class="property">link2</span>);</span></span><br><span class="line"><span class="language-javascript">        info2.<span class="title function_">go</span>();</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;-------------------------------------------------------&quot;</span>)</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="comment">// 通过 []</span></span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">console</span>.<span class="title function_">log</span>(info2[<span class="string">&quot;link2&quot;</span>]);</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">console</span>.<span class="title function_">log</span>(info2[<span class="string">&quot;title2&quot;</span>]);</span></span><br><span class="line"><span class="language-javascript">        info2[<span class="string">&quot;go&quot;</span>]();</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;-------------------------------------------------------&quot;</span>)</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="comment">// ES6 对象解构 -快速获取属性和方法的一种形式</span></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> &#123;title2, link2, go&#125; = info2;</span></span><br><span class="line"><span class="language-javascript">        <span class="comment">// 还原代码</span></span></span><br><span class="line"><span class="language-javascript">        <span class="comment">// var title2 = info2.title2;</span></span></span><br><span class="line"><span class="language-javascript">        <span class="comment">// var link2 = info2.link2;</span></span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">console</span>.<span class="title function_">log</span>(title2);</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">console</span>.<span class="title function_">log</span>(link2);</span></span><br><span class="line"><span class="language-javascript">        <span class="title function_">go</span>();</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="comment">// 为什么 对象的取值 提供两种方式 . []</span></span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="4-6-ES6语法：传播操作符"><a href="#4-6-ES6语法：传播操作符" class="headerlink" title="4.6 ES6语法：传播操作符"></a>4.6 ES6语法：传播操作符</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment"> * @Description: </span></span><br><span class="line"><span class="comment"> * @Version: 1.0</span></span><br><span class="line"><span class="comment"> * @Autor: negativeFunction</span></span><br><span class="line"><span class="comment"> * @Date: 2022-07-28 17:53:32</span></span><br><span class="line"><span class="comment"> * @FilePath: \Demo01\demo02.html</span></span><br><span class="line"><span class="comment"> * @LastEditors: negativeFunction</span></span><br><span class="line"><span class="comment"> * @LastEditTime: 2022-07-28 18:00:35</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;X-UA-Compatible&quot;</span> <span class="attr">content</span>=<span class="string">&quot;IE=edge&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="comment">// 对象传播操作符 ...</span></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> person = &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="attr">name</span>: <span class="string">&quot;lin&quot;</span>,</span></span><br><span class="line"><span class="language-javascript">            <span class="attr">address</span>: <span class="string">&quot;China&quot;</span>,</span></span><br><span class="line"><span class="language-javascript">            <span class="attr">link</span>: <span class="string">&quot;https://www.baidu.com&quot;</span>,</span></span><br><span class="line"><span class="language-javascript">            <span class="attr">phone</span>: <span class="string">&quot;11111&quot;</span>,</span></span><br><span class="line"><span class="language-javascript">            <span class="title function_">go</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;go to school&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">            &#125;</span></span><br><span class="line"><span class="language-javascript">        &#125;;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="comment">// 解构</span></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> &#123;name, address, ...person2&#125; =person;</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">console</span>.<span class="title function_">log</span>(name);</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">console</span>.<span class="title function_">log</span>(address);</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">console</span>.<span class="title function_">log</span>(person2);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="comment">// 应用案例</span></span></span><br><span class="line"><span class="language-javascript">        <span class="comment">/*</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">        * java --后台</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">        * 数据格式 var userPage = &#123;pages: 10, users: [&#123;&#125;, &#123;&#125;], pageNo: 1, pageSize: 100, total: 100&#125;;</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">        * 异步请求</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">        * $.post(&quot;/user/search&quot;, function(res) &#123;&#125;</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">        * */</span></span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        res = &#123;<span class="attr">pages</span>: <span class="number">10</span>, <span class="attr">users</span>: [&#123;&#125;, &#123;&#125;], <span class="attr">pageNo</span>: <span class="number">1</span>, <span class="attr">pageSize</span>: <span class="number">100</span>, <span class="attr">total</span>: <span class="number">100</span>&#125;;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> userPage = &#123;<span class="attr">pages</span>: <span class="number">10</span>, <span class="attr">users</span>: [&#123;&#125;, &#123;&#125;], <span class="attr">pageNo</span>: <span class="number">1</span>, <span class="attr">pageSize</span>: <span class="number">100</span>, <span class="attr">total</span>: <span class="number">100</span>&#125;;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> &#123;users, total, pageNo, pages&#125; = userPage;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="4-7-ES6语法：数组-map-和-reduce-方法使用"><a href="#4-7-ES6语法：数组-map-和-reduce-方法使用" class="headerlink" title="4.7 ES6语法：数组 map 和 reduce 方法使用"></a>4.7 ES6语法：数组 map 和 reduce 方法使用</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment"> * @Description: </span></span><br><span class="line"><span class="comment"> * @Version: 1.0</span></span><br><span class="line"><span class="comment"> * @Autor: negativeFunction</span></span><br><span class="line"><span class="comment"> * @Date: 2022-07-28 17:53:32</span></span><br><span class="line"><span class="comment"> * @FilePath: \Demo01\demo02.html</span></span><br><span class="line"><span class="comment"> * @LastEditors: negativeFunction</span></span><br><span class="line"><span class="comment"> * @LastEditTime: 2022-07-28 18:00:35</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;X-UA-Compatible&quot;</span> <span class="attr">content</span>=<span class="string">&quot;IE=edge&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="comment">// 对arr 数组每个元素 *2</span></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">let</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>];</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="comment">// 传统方式</span></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">let</span> newArr = [];</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; arr.<span class="property">length</span>; i++) &#123;</span></span><br><span class="line"><span class="language-javascript">            newArr.<span class="title function_">push</span>(arr[i] * <span class="number">2</span>);</span></span><br><span class="line"><span class="language-javascript">        &#125;;</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">console</span>.<span class="title function_">log</span>(newArr);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="comment">// map增强</span></span></span><br><span class="line"><span class="language-javascript">        <span class="comment">// map中自带循环遍历 并且在循环时 会将处理的值 回填到对应位置</span></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> newArr2 = arr.<span class="title function_">map</span>(<span class="keyword">function</span> (<span class="params">ele</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">return</span> ele * <span class="number">2</span></span></span><br><span class="line"><span class="language-javascript">        &#125;);</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> newArr3 = arr.<span class="title function_">map</span>( <span class="function"><span class="params">ele</span> =&gt;</span> ele * <span class="number">2</span>);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="comment">// 不能这样写</span></span></span><br><span class="line"><span class="language-javascript">        <span class="comment">// var ele = [1, 2, 3, 4]; 无法找到函数参数ele定义</span></span></span><br><span class="line"><span class="language-javascript">        <span class="comment">// var newArr4 = ele.map( () =&gt; ele * 2);</span></span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;2---&quot;</span> + newArr2);</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;3---&quot;</span> + newArr3);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="comment">// map 处理对象数据</span></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> users = [&#123;<span class="attr">age</span>: <span class="number">10</span>, <span class="attr">name</span>: <span class="string">&quot;xiaoming&quot;</span>&#125;, &#123;<span class="attr">age</span>: <span class="number">12</span>, <span class="attr">name</span>: <span class="string">&quot;xiaohong&quot;</span>&#125;, &#123;<span class="attr">age</span>: <span class="number">15</span>, <span class="attr">name</span>: <span class="string">&quot;xiaolan&quot;</span>&#125;];</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> newUsers = users.<span class="title function_">map</span>(<span class="function"><span class="params">ele</span> =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-javascript">            ele.<span class="property">age</span> += <span class="number">1</span>;</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">return</span> ele;</span></span><br><span class="line"><span class="language-javascript">        &#125;);</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">console</span>.<span class="title function_">log</span>(newUsers);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="comment">// 将数组不断依次 取出两个 相加后赋值到原来的位置 直至参数不够 一次性出去两个</span></span></span><br><span class="line"><span class="language-javascript">        <span class="comment">/*</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">        * 1 2 3 4</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">        * =&gt; 1 + 2 = 3</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">        * 3 3 4</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">        * =&gt; 3 + 3 = 6</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">        * 6 4</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">        * =&gt; 6 + 4 = 10</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">        * log 10</span></span></span><br><span class="line"><span class="comment"><span class="language-javascript">        * */</span></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> result = arr.<span class="title function_">reduce</span>(<span class="keyword">function</span> (<span class="params">a, b</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">return</span> a + b;</span></span><br><span class="line"><span class="language-javascript">        &#125;)</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;result==&gt;&quot;</span> + result);</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="5-npm包管理器"><a href="#5-npm包管理器" class="headerlink" title="5. npm包管理器"></a>5. npm包管理器</h2><blockquote>
+<p><strong>npm包管理器简介</strong></p>
+</blockquote>
+<p>官网：<a target="_blank" rel="noopener" href="https://www.npmjs.com/">https://www.npmjs.com/</a></p>
+<p>npm全球Node Package Manager 是Nodejs包管理工具 号称全球最大的模块生态系统 里面所有的模块都是开源免费的 也是Nodejs的包管理工具 相当于前端的Maven 地位对比Maven在Java中的地位</p>
+<p>简单操作：</p>
+<ul>
+<li><p><code>npm -v</code> 查看当前npm 版本 –在安装nodejs时 会自动安装npm</p>
+</li>
+<li><p>用于 快速构建 nodejs 工程 和 快速安装依赖与第三方模块 如 <code>npm install redis</code>  <code>npm install mysql</code></p>
+</li>
+<li><p>项目骨架构建步骤：</p>
+<ol>
+<li><p>创建文件夹 并在文件夹中 执行 <code>npm init</code> 选择对应需要的参数 构建npm 项目 使用 <code>npm inti -y</code> 可以一键默认值创建项目初始化</p>
+</li>
+<li><p>得到package.json 即 在执行 <code>npm init</code> 时选择的参数与信息<br>package.json 类似于 pom.xml 文件用于管理第三方依赖</p>
+</li>
+<li><p>快速安装第三方依赖 通过 <code>npm install xxx</code> 或者 <code>npm i redis模块名</code> 来安装第三方依赖</p>
+<p>执行命令后 会自动生成 node_modules 文件夹来存放第三方项目依赖</p>
+<p>安装完成后 require 导入依赖并使用 –<strong>参考官方文档</strong></p>
+<p>通过 <code>npm install xxx</code> 安装的依赖会 记录在package.json 这个文件中 就类似于maven 将依赖以及项目信息记录在 pom.xml中类似 </p>
+<p>记录的作用在于 –&gt; 便于复用 所安装的依赖 同时 适配版本</p>
+<p><em>不直接拷贝node_modules文件夹的原因是 一个完整的前端项目 所包含的node_modules第三方依赖数量较为庞大 可能多大上万个文件 直接拷贝的速率会相当低 同时也存在版本更新问题</em></p>
+</li>
+<li><p>更改 npm 镜像 为淘宝镜像</p>
+<p><code>npm install -g cnpm --registry=https://registry.npm.taobao.org</code></p>
+</li>
+<li><p>一次性下载多个依赖<code>npm install redis jquery@1.4.5 mysql</code><br>具体版本号查看官网 <a target="_blank" rel="noopener" href="https://www.npmjs.com/package/redis">https://www.npmjs.com/package/redis</a></p>
+</li>
+<li><p>卸载模块 通过<code>npm uninstall veu redis</code></p>
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="6-Babel"><a href="#6-Babel" class="headerlink" title="6. Babel"></a>6. Babel</h2><blockquote>
+<p><strong>Babel 简介</strong></p>
+</blockquote>
+<p>ES6的部分高级语法 在浏览器甚至Nodejs环境中无法运行</p>
+<p>Babel 是一个广泛的转码器 用于将ES6转码成ES5代码 从而能满足Nodejs和浏览器的环境适配 –即可以使用ES6代码规范 语法糖来编写程序 而不用担心环境是否支持</p>
+<p>官网：<a target="_blank" rel="noopener" href="https://www.babeljs.cn/">https://www.babeljs.cn/</a></p>
+<p><strong>Babel 自带了一个内置的 CLI 命令行工具 –babe-cli，可通过命令行编译文件。</strong></p>
+<p>此外，各种可直接调用脚本都存放在 <code>@babel/cli/bin</code> 中。一个可通过 shell 执行的实用脚本 - <code>babel-external-helpers.js</code>，以及 Babel cli 主脚本 <code>babel.js</code>。</p>
+<blockquote>
+<p><strong>安装以及简单操作步骤</strong></p>
+</blockquote>
+<p>命令行安装babel转码工具 –babel提供babel-cli工具 用于命令行 转码</p>
+<p><strong>具体安装步骤：</strong></p>
+<ol>
+<li><p><code>npm install -g babel cli</code> 安装babel-cli 工具 –实际操作不确定成功</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// 若不成功 则使用以下命令</span><br><span class="line">cnpm install babel -g</span><br><span class="line">cnpm install babel-cli -g</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p><code>babel --version</code> 查看是否安装成功 以及版本</p>
+</li>
+</ol>
+<p><strong>简单应用操作：</strong></p>
+<ol>
+<li><p>创建babel工程文件夹</p>
+</li>
+<li><p>初始化项目 <code>npm init -y</code></p>
+</li>
+<li><p>创建文件src&#x2F;example.js 并编写一段ES6代码</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 转码前</span></span><br><span class="line"><span class="comment">// 定义数据</span></span><br><span class="line"><span class="keyword">let</span> input = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="comment">// 将数组每个元素都 + 1</span></span><br><span class="line">input = input.<span class="title function_">map</span>( <span class="function"><span class="params">params</span> =&gt;</span> params + <span class="number">1</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(input)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置 .babelrc<br>babel的配置文件是 .babelrc 存放在项目的根目录下 该文件用来设置转码规则和插件 基本格式如下</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;presets&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;plugins&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>presets字段设定转码规则 将ES2015规则加入 .babelrc</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;presets&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;es2015&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;plugins&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用命令<code>npm install --save-dev babel-preset-es2015</code>安装转码器 在项目中安装</p>
+</li>
+<li><p>通过执行 <code>babel src -d dist</code>命令进行 转换</p>
+</li>
+</ol>
+<blockquote>
+<p><strong>自定义脚本运行babel</strong></p>
+</blockquote>
+<p>具体操作步骤：</p>
+<ol>
+<li><p>改写package.json</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    <span class="attr">&quot;script&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">        <span class="attr">&quot;build&quot;</span><span class="punctuation">:</span> <span class="string">&quot;babel src\\example.js -o dist\\compiled.js&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>转码时 执行以下命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir dist</span><br><span class="line">npm run build</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="7-模块化"><a href="#7-模块化" class="headerlink" title="7. 模块化"></a>7. 模块化</h2><blockquote>
+<p><strong>模块化简介</strong></p>
+</blockquote>
+<p><strong>模块化产生背景</strong></p>
+<p>随着网站逐渐变成 “互联网应用程序” 嵌入网页的JavaScript代码也越来越庞大 越来越复杂</p>
+<p>JavaScript模块化编程 成为一种迫切需求 在模块化开发下 开发者只需要实现核心业务逻辑 其他只需要加载第三方模块 但早年的JavaScript并不是一种模块化编程语言 它不支持 类class 包package 等概念 也不支持模块 module</p>
+<p>故而JavaScript需要进阶成模块化编程</p>
+<p><strong>模块化规范</strong></p>
+<ul>
+<li>CommonJS模块化规范 –require mysql require app</li>
+<li>ES6模块化规范 –vue uniapp</li>
+</ul>
+<blockquote>
+<p><strong>CommonJS模块化规范</strong></p>
+</blockquote>
+<p>需要导入的工具类：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 工具类</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">sum</span> = (<span class="params">a, b</span>) =&gt; a + b;</span><br><span class="line"><span class="keyword">const</span> <span class="title function_">sub</span> = (<span class="params">a, b</span>) =&gt; a - b;</span><br><span class="line"><span class="keyword">const</span> <span class="title function_">mul</span> = (<span class="params">a, b</span>) =&gt; a * b;</span><br><span class="line"><span class="keyword">const</span> <span class="title function_">di</span> = (<span class="params">a, b</span>) =&gt; a / b;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 导入工具类 提供给别人使用</span></span><br><span class="line"><span class="comment">// module.exports = &#123;</span></span><br><span class="line"><span class="comment">//     sum: sum,</span></span><br><span class="line"><span class="comment">//     sub: sub,</span></span><br><span class="line"><span class="comment">//     mul: mul,</span></span><br><span class="line"><span class="comment">//     di: di,</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 必须要导出才能是外部引用使用</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">    sum,</span><br><span class="line">    sub,</span><br><span class="line">    mul,</span><br><span class="line">    di</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// common js 模块化规范</span></span><br></pre></td></tr></table></figure>
+
+<p>导出测试：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用 require 导入自己写的工具类</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> util = <span class="built_in">require</span>(<span class="string">&#x27;./common.js&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(util.<span class="title function_">sum</span>(<span class="number">1</span>, <span class="number">2</span>));</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(util.<span class="title function_">sub</span>(<span class="number">1</span>, <span class="number">2</span>));</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(util.<span class="title function_">mul</span>(<span class="number">1</span>, <span class="number">2</span>));</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(util.<span class="title function_">di</span>(<span class="number">1</span>, <span class="number">2</span>));</span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p><strong>ES6模块化规范</strong></p>
+</blockquote>
+<p><strong>ES6 使用export 与 import 来实现 导入导入模块</strong></p>
+<p>ES6 export 与 import</p>
+<p>es6.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">getList</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="comment">// 真实业务中 异步获取 数据</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;获取数据列表&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">addData</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="comment">// 真实业务中 异步获取 数据</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;保存数据&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>es6-plus.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 新版es6 export 与 import 写法</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="title function_">addData</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="comment">// 真实业务中 异步获取 数据</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;保存数据&quot;</span>);</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="title function_">getList</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="comment">// 真实业务中 异步获取 数据</span></span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;获取数据列表&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>test.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用 require 导入自己写的工具类</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> util = <span class="built_in">require</span>(<span class="string">&#x27;./common.js&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(util.<span class="title function_">sum</span>(<span class="number">1</span>, <span class="number">2</span>));</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(util.<span class="title function_">sub</span>(<span class="number">1</span>, <span class="number">2</span>));</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(util.<span class="title function_">mul</span>(<span class="number">1</span>, <span class="number">2</span>));</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(util.<span class="title function_">di</span>(<span class="number">1</span>, <span class="number">2</span>));</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;-----------------------------------&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注意 默认不支持 ES6 语法 import 需要将其 使用babel 降级 打包成ES5 语法</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123;getList, addData&#125; <span class="keyword">from</span> <span class="string">&#x27;./es6&#x27;</span></span><br><span class="line"><span class="title function_">getList</span>();</span><br><span class="line"><span class="title function_">addData</span>();</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;-----------------------------------&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> util2 <span class="keyword">from</span> <span class="string">&#x27;./es6-plus&#x27;</span></span><br><span class="line">util2.<span class="title function_">addData</span>();</span><br><span class="line">util2.<span class="title function_">getList</span>();</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>注意：</strong>&#x3D;&#x3D;默认不支持 ES6 语法 import 需要将其 使用babel 降级 打包成ES5 语法后 执行&#x3D;&#x3D;</p>
+<h2 id="8-Webpack"><a href="#8-Webpack" class="headerlink" title="8. Webpack"></a>8. Webpack</h2><blockquote>
+<p><strong>Webpack简介</strong></p>
+</blockquote>
+<p>Webpack是一个前端资源加载&#x2F;打包工具 它根据模块的依赖关系进行静态分析 将这些模块按照指定规则生成对应的静态资源 Webpack可以将多种静态资源 js css less 转换 成一个静态文件 从而减少了页面的请求</p>
+<p>官网：<a target="_blank" rel="noopener" href="https://webpack.docschina.org/">https://webpack.docschina.org/</a></p>
+<p><img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20220925143327685.png" alt="image-20220925143327685"></p>
+<p>不仅将静态资源整合 同时也集成 编译 babel 以及 vue 里面的一些功能</p>
+<blockquote>
+<p><strong>Webpack安装及使用</strong></p>
+</blockquote>
+<p><strong>webpack安装</strong></p>
+<p>具体操作步骤：</p>
+<ol>
+<li>使用<code>npm install -g webpack-cli</code> 全局安装</li>
+<li><code>webpack -v</code> 查看安装后的版本号</li>
+</ol>
+<p>Todo</p>
+<p>注意解决 Webpack与webpack-dev-server 版本不兼容问题</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">解决installed问题</span><br><span class="line">PS E:\aPersonalData\vue\Projects\Test\demo-04-webpack&gt; webpack -v</span><br><span class="line">webpack: 5.74.0</span><br><span class="line">webpack-cli: 4.10.0</span><br><span class="line">webpack-dev-server not installed</span><br><span class="line"></span><br><span class="line">执行 npm install --save-dev webpack-dev-server </span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>webpack合并JS 打包</strong></p>
+<p>具体操作步骤：</p>
+<ol>
+<li>创建一个nodejs项目 目录名为demo-04-webpack <code>npm init -y</code></li>
+<li>创建一个src目录</li>
+<li>在src中存放两个需要合并的util.js 和 common.js</li>
+<li>准备一个入口文件 main.js 即模块集中进行引用</li>
+<li>准备进行 JS打包 在根目录下定义一个webpack.config.js文件配置打包规则</li>
+<li>执行 <code>webpack</code> 查看效果</li>
+<li>执行 <code>webpack -w</code> 可以实现监听文件改动 实现热更新</li>
+</ol>
+<p>README.md</p>
+<figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">1.</span> 创建一个nodejs项目 npm init -y</span><br><span class="line"><span class="bullet">2.</span> 创建一个src目录</span><br><span class="line"><span class="bullet">3.</span> 在src中存放两个需要合并的util.js 和 common.js</span><br><span class="line"><span class="bullet">4.</span> 准备一个入口文件 main.js 即模块集中进行引用</span><br><span class="line"></span><br><span class="line">// JS打包</span><br><span class="line"><span class="bullet">5.</span> 在根目录下定义一个webpack.config.js文件配置打包规则</span><br><span class="line"><span class="bullet">6.</span> 执行webpack查看效果</span><br></pre></td></tr></table></figure>
+
+
+
+<p>util.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 相加函数</span></span><br><span class="line"><span class="built_in">exports</span>.<span class="property">add</span> =  <span class="function">(<span class="params">a, b</span>) =&gt;</span> a + b;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>common.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 输出案例</span></span><br><span class="line"><span class="built_in">exports</span>.<span class="property">info</span> = <span class="keyword">function</span> (<span class="params">str</span>) &#123;</span><br><span class="line">    <span class="comment">// 向控制台输出</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(str);</span><br><span class="line">    <span class="comment">// 向浏览器输出</span></span><br><span class="line">    <span class="variable language_">document</span>.<span class="title function_">writeln</span>(str);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>main.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 导入 util</span></span><br><span class="line"><span class="keyword">const</span> util = <span class="built_in">require</span>(<span class="string">&#x27;./util&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 导入 common</span></span><br><span class="line"><span class="keyword">const</span>  common = <span class="built_in">require</span>(<span class="string">&#x27;./common&#x27;</span>);</span><br><span class="line"></span><br><span class="line">common.<span class="title function_">info</span>(<span class="string">&quot;hello world&quot;</span> + util.<span class="title function_">add</span>(<span class="number">1</span>,<span class="number">32</span>));</span><br></pre></td></tr></table></figure>
+
+
+
+<p>webpack.config.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 导入 path模块 nodejs的内置模块</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&quot;path&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义JS 打包规则</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">    <span class="comment">// 入口函数 从哪里开始进行编译打包</span></span><br><span class="line"></span><br><span class="line">    <span class="attr">entry</span>: <span class="string">&quot;./src/main.js&quot;</span>,</span><br><span class="line">    <span class="comment">// 编译成功后 把内容输出到...</span></span><br><span class="line">    <span class="attr">output</span>: &#123;</span><br><span class="line">        <span class="comment">// 定义输出指定的目录 __dirname 为一个常量 --&gt; 当前项目根目录 产生一个 dist 文件夹</span></span><br><span class="line">        <span class="attr">path</span>: path.<span class="title function_">resolve</span>(__dirname, <span class="string">&quot;./dist&quot;</span>),</span><br><span class="line">        <span class="comment">// 最终生成 合并的 js 文件存储在dist/bundle.js 文件中</span></span><br><span class="line">        <span class="attr">filename</span>: <span class="string">&quot;bundle.js&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>webpack合并CSS 打包</strong></p>
+<p>webpack本身只能处理 JavaScript 模块 如需处理其他类型文件 就需要使用loader进行转换  loader可以理解为模块与资源的转换器</p>
+<p>在使用 loader 时 需要安装 相关 loader 插件</p>
+<ul>
+<li>css-loader 是将 css 装载到 JavaScript</li>
+<li>style-loader 是使得 JavaScript 能识别 css</li>
+</ul>
+<p>具体操作步骤：</p>
+<ol>
+<li>执行 <code>npm install --save-dev style-loader css-loader</code> 安装 style-loader 和 css-loader</li>
+<li>修改 配置webpack.config.js</li>
+<li>在src目录下 创建 style.css</li>
+<li>修改 main.js 在第一行 引入 style.css</li>
+<li>将 <code>webpack -w</code> 写进package.json中 运行 <code>npm run dev</code> 编译命令</li>
+</ol>
+<p>style.css</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">    <span class="attribute">background</span>: yellow;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>main.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 导入 util</span></span><br><span class="line"><span class="keyword">const</span> util = <span class="built_in">require</span>(<span class="string">&#x27;./util&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 导入 common</span></span><br><span class="line"><span class="keyword">const</span>  common = <span class="built_in">require</span>(<span class="string">&#x27;./common&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 导入css</span></span><br><span class="line"><span class="built_in">require</span>(<span class="string">&quot;./style.css&quot;</span>)</span><br><span class="line"></span><br><span class="line">common.<span class="title function_">info</span>(<span class="string">&quot;hello world&quot;</span> + util.<span class="title function_">add</span>(<span class="number">1</span>,<span class="number">32</span>));</span><br></pre></td></tr></table></figure>
+
+
+
+<p>webpack.config.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 导入 path模块 nodejs的内置模块</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&quot;path&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义JS 打包规则</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">    <span class="comment">// 入口函数 从哪里开始进行编译打包</span></span><br><span class="line"></span><br><span class="line">    <span class="attr">entry</span>: <span class="string">&quot;./src/main.js&quot;</span>,</span><br><span class="line">    <span class="comment">// 编译成功后 把内容输出到...</span></span><br><span class="line">    <span class="attr">output</span>: &#123;</span><br><span class="line">        <span class="comment">// 定义输出指定的目录 __dirname 为一个常量 --&gt; 当前项目根目录 产生一个 dist 文件夹</span></span><br><span class="line">        <span class="attr">path</span>: path.<span class="title function_">resolve</span>(__dirname, <span class="string">&quot;./dist&quot;</span>),</span><br><span class="line">        <span class="comment">// 最终生成 合并的 js 文件存储在dist/bundle.js 文件中</span></span><br><span class="line">        <span class="attr">filename</span>: <span class="string">&quot;bundle.js&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">module</span>: &#123;</span><br><span class="line">        <span class="attr">rules</span>: [&#123;</span><br><span class="line">            <span class="attr">test</span>: <span class="regexp">/\.css$/</span>, <span class="comment">//将项目中 所有的.css 结尾的文件 都进行打包</span></span><br><span class="line">            <span class="attr">use</span>: [<span class="string">&quot;style-loader&quot;</span>, <span class="string">&quot;css-loader&quot;</span>]</span><br><span class="line">        &#125;]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>package.json</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;demo-04-webpack&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;main&quot;</span><span class="punctuation">:</span> <span class="string">&quot;index.js&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;scripts&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;test&quot;</span><span class="punctuation">:</span> <span class="string">&quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;dev&quot;</span><span class="punctuation">:</span> <span class="string">&quot;webpack -w&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;keywords&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;author&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;license&quot;</span><span class="punctuation">:</span> <span class="string">&quot;ISC&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;devDependencies&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;css-loader&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^6.7.1&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;style-loader&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^3.3.1&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;webpack-dev-server&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^4.11.1&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="9-Vue-element-admin"><a href="#9-Vue-element-admin" class="headerlink" title="9. Vue-element-admin"></a>9. Vue-element-admin</h2><blockquote>
+<p><strong>Vue-element-admin简介</strong></p>
+</blockquote>
+<p>Vue-element-admin 是一个 后台前端解决方案 基于vue 与element-ui 实现 它使用了最新的前端技术栈 内置了i18n 国际化解决方案 动态路由 权限认证 提炼了最具典型的业务模型 提供了丰富的功能插件 可以帮助你快速搭建企业级中后台产品原型 </p>
+<p>官网：<a target="_blank" rel="noopener" href="https://panjiachen.github.io/vue-element-admin-site/zh/">https://panjiachen.github.io/vue-element-admin-site/zh/</a></p>
+<h2 id="10-AntDesign"><a href="#10-AntDesign" class="headerlink" title="10. AntDesign"></a>10. AntDesign</h2><h2 id="11-package-json"><a href="#11-package-json" class="headerlink" title="11. package.json"></a>11. package.json</h2>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/01/21/Vue/" rel="prev" title="Vue">
+      <i class="fa fa-chevron-left"></i> Vue
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/01/21/JUC/" rel="next" title="JUC">
+      JUC <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Nodejs"><span class="nav-number">1.</span> <span class="nav-text">Nodejs</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E9%A2%84%E7%A7%91%E5%87%86%E5%A4%87"><span class="nav-number">1.1.</span> <span class="nav-text">1. 预科准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Nodejs-%E5%AE%9E%E7%8E%B0%E8%AF%B7%E6%B1%82%E5%93%8D%E5%BA%94"><span class="nav-number">1.2.</span> <span class="nav-text">2. Nodejs 实现请求响应</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Nodejs-%E6%93%8D%E4%BD%9CMySQL%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">1.3.</span> <span class="nav-text">3. Nodejs 操作MySQL数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-ES6%E6%A6%82%E8%BF%B0"><span class="nav-number">1.4.</span> <span class="nav-text">4. ES6概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-ES6%E8%AF%AD%E6%B3%95%EF%BC%9Alet-%E5%92%8C-const%E5%91%BD%E4%BB%A4"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1 ES6语法：let 和 const命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-ES6%E8%AF%AD%E6%B3%95%EF%BC%9A%E6%A8%A1%E6%9D%BF%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2 ES6语法：模板字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-ES6%E8%AF%AD%E6%B3%95%EF%BC%9A%E5%87%BD%E6%95%B0%E9%BB%98%E8%AE%A4%E5%8F%82%E6%95%B0%E4%B8%8E%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0"><span class="nav-number">1.4.3.</span> <span class="nav-text">4.3 ES6语法：函数默认参数与箭头函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-ES6%E8%AF%AD%E6%B3%95%EF%BC%9A%E5%AF%B9%E8%B1%A1%E5%88%9D%E5%A7%8B%E5%8C%96%E7%AE%80%E5%86%99"><span class="nav-number">1.4.4.</span> <span class="nav-text">4.4 ES6语法：对象初始化简写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5-ES6%E8%AF%AD%E6%B3%95%EF%BC%9A%E5%AF%B9%E8%B1%A1%E8%A7%A3%E6%9E%84"><span class="nav-number">1.4.5.</span> <span class="nav-text">4.5 ES6语法：对象解构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-6-ES6%E8%AF%AD%E6%B3%95%EF%BC%9A%E4%BC%A0%E6%92%AD%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="nav-number">1.4.6.</span> <span class="nav-text">4.6 ES6语法：传播操作符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-7-ES6%E8%AF%AD%E6%B3%95%EF%BC%9A%E6%95%B0%E7%BB%84-map-%E5%92%8C-reduce-%E6%96%B9%E6%B3%95%E4%BD%BF%E7%94%A8"><span class="nav-number">1.4.7.</span> <span class="nav-text">4.7 ES6语法：数组 map 和 reduce 方法使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-npm%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8"><span class="nav-number">1.5.</span> <span class="nav-text">5. npm包管理器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-Babel"><span class="nav-number">1.6.</span> <span class="nav-text">6. Babel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E6%A8%A1%E5%9D%97%E5%8C%96"><span class="nav-number">1.7.</span> <span class="nav-text">7. 模块化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-Webpack"><span class="nav-number">1.8.</span> <span class="nav-text">8. Webpack</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-Vue-element-admin"><span class="nav-number">1.9.</span> <span class="nav-text">9. Vue-element-admin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-AntDesign"><span class="nav-number">1.10.</span> <span class="nav-text">10. AntDesign</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-package-json"><span class="nav-number">1.11.</span> <span class="nav-text">11. package.json</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Linyuxuan</p>
+  <div class="site-description" itemprop="description">Hope Sometimes Love Brain</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Linyuxuan</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
