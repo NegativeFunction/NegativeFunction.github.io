@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/logo.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/logo.png">
+  <link rel="mask-icon" href="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/logo.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"negativefunction.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="SpringBoot_Note_02_实践与应用中文文档1. 第一个SpringBoot项目 JDK1.8 maven 3.6.1 SpringBoot最新 IDEA   https:&#x2F;&#x2F;start.spring.io&#x2F; IDEA创建SpringBoot项目  123SpringBootTestApplication	程序主入口application.properties	程序配置文件Spring">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringBoot-3">
+<meta property="og:url" content="https://negativefunction.github.io/2022/07/07/SpringBoot-3/index.html">
+<meta property="og:site_name" content="Welcome To Lin&#39;s World">
+<meta property="og:description" content="SpringBoot_Note_02_实践与应用中文文档1. 第一个SpringBoot项目 JDK1.8 maven 3.6.1 SpringBoot最新 IDEA   https:&#x2F;&#x2F;start.spring.io&#x2F; IDEA创建SpringBoot项目  123SpringBootTestApplication	程序主入口application.properties	程序配置文件Spring">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="c:\Users\%E9%BB%8E%E6%98%8E\AppData\Roaming\Typora\typora-user-images\image-20220816105248594.png">
+<meta property="article:published_time" content="2022-07-07T09:20:03.000Z">
+<meta property="article:modified_time" content="2023-01-21T12:37:45.542Z">
+<meta property="article:author" content="Linyuxuan">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:\Users\%E9%BB%8E%E6%98%8E\AppData\Roaming\Typora\typora-user-images\image-20220816105248594.png">
+
+<link rel="canonical" href="https://negativefunction.github.io/2022/07/07/SpringBoot-3/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>SpringBoot-3 | Welcome To Lin's World</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Welcome To Lin's World</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">The Future Will Come</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">16</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://negativefunction.github.io/2022/07/07/SpringBoot-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/05.jpg">
+      <meta itemprop="name" content="Linyuxuan">
+      <meta itemprop="description" content="Hope Sometimes Love Brain">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Welcome To Lin's World">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SpringBoot-3
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-07-07 17:20:03" itemprop="dateCreated datePublished" datetime="2022-07-07T17:20:03+08:00">2022-07-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-01-21 20:37:45" itemprop="dateModified" datetime="2023-01-21T20:37:45+08:00">2023-01-21</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="SpringBoot-Note-02-实践与应用中文文档"><a href="#SpringBoot-Note-02-实践与应用中文文档" class="headerlink" title="SpringBoot_Note_02_实践与应用中文文档"></a>SpringBoot_Note_02_实践与应用中文文档</h2><h3 id="1-第一个SpringBoot项目"><a href="#1-第一个SpringBoot项目" class="headerlink" title="1. 第一个SpringBoot项目"></a>1. 第一个SpringBoot项目</h3><ul>
+<li>JDK1.8</li>
+<li>maven 3.6.1</li>
+<li>SpringBoot最新</li>
+<li>IDEA</li>
+</ul>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://start.spring.io/">https://start.spring.io/</a></li>
+<li>IDEA创建SpringBoot项目</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SpringBootTestApplication	程序主入口</span><br><span class="line">application.properties	程序配置文件</span><br><span class="line">SpringBootTestApplicationTests	程序测试环境</span><br></pre></td></tr></table></figure>
+
+<p>com.example.springboottest目录下建controller pojo dao service</p>
+<p>写一个hellocontroller来测试环境</p>
+<ul>
+<li>测试更改properties配置文件</li>
+</ul>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server.port</span>=<span class="string">8082</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>彩蛋</p>
+<ul>
+<li><p>SpringBoot banner 在线生成</p>
+<p>网址 <a target="_blank" rel="noopener" href="http://www.bootschool.net/ascii">www.bootschool.net/ascii</a></p>
+<ol>
+<li>resources目录下新建 banner.txt</li>
+<li>重启</li>
+</ol>
+</li>
+</ul>
+<h3 id="2-yaml配置"><a href="#2-yaml配置" class="headerlink" title="2. yaml配置"></a>2. yaml配置</h3><ol>
+<li><p>删除properties 新建application.yaml</p>
+</li>
+<li><p>普通key-value对应 : </p>
+</li>
+<li><p>数组 对象</p>
+<ol>
+<li>yaml空格形式</li>
+<li>行内写法</li>
+</ol>
+</li>
+<li><p>给实体类赋值</p>
+<ol>
+<li><p>新建dog @Component</p>
+<ul>
+<li>String name</li>
+<li>Integer age</li>
+</ul>
+</li>
+<li><p>新建Person</p>
+<ul>
+<li>String name</li>
+<li>Integer age</li>
+<li>Boolean happy</li>
+<li>Date birth</li>
+<li>Map&lt; S, O &gt; maps</li>
+<li>List&lt; O &gt; LIsts</li>
+<li>Dog dog</li>
+</ul>
+<p>注意 birth 与 maps</p>
+</li>
+<li><p>绑定配置文件</p>
+<ul>
+<li><p>@ConfigurationProperties(prefix &#x3D; “”)绑定类</p>
+</li>
+<li><p>@PropertySource(value &#x3D; “classpath:application.properties”) 指定加载配置文件</p>
+<p>需要使用SPEL表达式取出配置文件值</p>
+<p>@Value(“${name}”)</p>
+</li>
+</ul>
+</li>
+<li><p>配置文件中使用SPEL表达式</p>
+<p>name: qinjiang${random.uuid}</p>
+<p>age: ${random.int}</p>
+<p>hello:dd</p>
+<p>dog:</p>
+<p> name: ${person.hello:hello}_did</p>
+</li>
+</ol>
+</li>
+</ol>
+<p>javaconfig 绑定配置文件值 采取以上方式</p>
+<h3 id="3-JSR303校验"><a href="#3-JSR303校验" class="headerlink" title="3. JSR303校验"></a>3. JSR303校验</h3><ol>
+<li><p>松散绑定</p>
+</li>
+<li><table>
+<thead>
+<tr>
+<th>注释</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>空检查</td>
+<td></td>
+</tr>
+<tr>
+<td>@Null</td>
+<td>验证对象是否为null</td>
+</tr>
+<tr>
+<td>@NotNull</td>
+<td>验证对象是否不为null, 无法查检长度为0的字符串</td>
+</tr>
+<tr>
+<td>@NotBlank</td>
+<td>检查约束字符串是不是Null还有被Trim的长度是否大于0,只对字符串,且会去掉前后空格</td>
+</tr>
+<tr>
+<td>@NotEmpty</td>
+<td>检查约束元素是否为NULL或者是EMPTY</td>
+</tr>
+<tr>
+<td>Booelan检查</td>
+<td></td>
+</tr>
+<tr>
+<td>@AssertTrue</td>
+<td>验证 Boolean 对象是否为 true</td>
+</tr>
+<tr>
+<td>@AssertFalse</td>
+<td>验证 Boolean 对象是否为 false</td>
+</tr>
+<tr>
+<td>长度检查</td>
+<td></td>
+</tr>
+<tr>
+<td>@Size(min&#x3D;, max&#x3D;)</td>
+<td>验证对象（Array,Collection,Map,String）长度是否在给定的范围之内</td>
+</tr>
+<tr>
+<td>@Length(min&#x3D;, max&#x3D;)</td>
+<td>string is between min and max included</td>
+</tr>
+<tr>
+<td>日期检查</td>
+<td></td>
+</tr>
+<tr>
+<td>@Past</td>
+<td>验证 Date 和 Calendar 对象是否在当前时间之前</td>
+</tr>
+<tr>
+<td>@Future</td>
+<td>验证 Date 和 Calendar 对象是否在当前时间之后</td>
+</tr>
+<tr>
+<td>@Pattern</td>
+<td>验证 String 对象是否符合正则表达式的规则</td>
+</tr>
+<tr>
+<td>…….等等</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>绑定在属性上</p>
+</li>
+</ol>
+<h3 id="4-多环境-多配置"><a href="#4-多环境-多配置" class="headerlink" title="4. 多环境 多配置"></a>4. 多环境 多配置</h3><ol>
+<li>工程文件下建config文件夹 –&gt; application.yaml</li>
+<li>工程文件夹（与src同级）建application.yaml</li>
+<li>resources文件夹 –&gt; application.yml</li>
+<li>resources文件夹下config目录 –&gt; application.yaml</li>
+</ol>
+<p>yml &#x3D; yaml</p>
+<p>1&gt;2&gt;4&gt;3</p>
+<p>多环境</p>
+<ol>
+<li><p>新建application-dev.properties 生产环境</p>
+</li>
+<li><p>新建application-test.properties 测试环境</p>
+</li>
+<li><p>application.properties中配置</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># SpringBoot多环境配置 选择一个配置文件</span></span><br><span class="line"><span class="attr">spring.profiles.active</span>=<span class="string">dev</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="5-SpringBoot-Web-开发"><a href="#5-SpringBoot-Web-开发" class="headerlink" title="5. SpringBoot Web 开发"></a>5. SpringBoot Web 开发</h3><ol>
+<li><p>hellocontroller测试</p>
+<p>controller目录与SpringBootTest02WebApplication同级</p>
+</li>
+<li><p>引入webjars</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.webjars<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jquery<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.5.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="http://localhost:8080/webjars/jquery/3.5.0/jquery.js">http://localhost:8080/webjars/jquery/3.5.0/jquery.js</a></p>
+<p><img src="C:\Users\黎明\AppData\Roaming\Typora\typora-user-images\image-20220816105248594.png" alt="image-20220816105248594"></p>
+<p>均可</p>
+<ul>
+<li>webjars</li>
+<li>public static &#x2F;** resources</li>
+</ul>
+<p>resources&gt;static &gt;public </p>
+</li>
+<li><p>index.html需要放在static目录下能自动识别</p>
+</li>
+<li><p>在template目录下的所有页面只能通过controller访问</p>
+</li>
+<li><p>将 index.html 放在template目录下 写 IndexController</p>
+</li>
+</ol>
+<p>自定义图标：</p>
+<ol>
+<li><p>在resources目录下存放favicon.ico</p>
+</li>
+<li><p>配置关闭默认图标</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 关闭默认图标</span></span><br><span class="line"><span class="attr">spring.mvc.favicon.enabled</span>=<span class="string">false</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="6-Thymeleaf模板引擎"><a href="#6-Thymeleaf模板引擎" class="headerlink" title="6. Thymeleaf模板引擎"></a>6. Thymeleaf模板引擎</h3><p>使用Thymeleaf 只需要导入相对应的依赖就行</p>
+<ol>
+<li>导入依赖</li>
+<li>编写html的page 放在template目录下</li>
+<li>写controller</li>
+<li>测试</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">xmlns:th=&quot;http://www.thymeleaf.org&quot;</span><br><span class="line"><span class="comment">&lt;!--@thymesVar id=&quot;msg&quot; type=&quot;String&quot;--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">th:text</span>=<span class="string">&quot;$&#123;msg&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--@thymesVar id=&quot;hh&quot; type=&quot;java.lang.Object&quot;--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">th:utext</span>=<span class="string">&quot;$&#123;hh&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">hr</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--@thymesVar id=&quot;users&quot; type=&quot;java.util.List&quot;--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h3</span> <span class="attr">th:each</span>=<span class="string">&quot;user:$&#123;users&#125;&quot;</span> <span class="attr">th:text</span>=<span class="string">&quot;$&#123;user&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">hr</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h3</span> <span class="attr">th:each</span>=<span class="string">&quot;user:$&#123;users&#125;&quot;</span>&gt;</span>[[$&#123;user&#125;]]<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/test&quot;)</span></span><br><span class="line"><span class="keyword">public</span> Object <span class="title function_">test01</span><span class="params">(Model model)</span> &#123;</span><br><span class="line">    model.addAttribute(<span class="string">&quot;msg&quot;</span>, <span class="string">&quot;hello world&quot;</span>);</span><br><span class="line">    model.addAttribute(<span class="string">&quot;hh&quot;</span>, <span class="string">&quot;&lt;h1&gt;hello world&lt;h1&gt;&quot;</span>);</span><br><span class="line">    model.addAttribute(<span class="string">&quot;users&quot;</span>, Arrays.asList(<span class="string">&quot;qingjiang&quot;</span>, <span class="string">&quot;kuangshen&quot;</span>, <span class="string">&quot;xiaowu&quot;</span>));</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;test&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>注意：th:text&#x3D;”${msg}”报红</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--@thymesVar id=&quot;msg&quot; type=&quot;String&quot;--&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="7-MVC-Config"><a href="#7-MVC-Config" class="headerlink" title="7. MVC Config"></a>7. MVC Config</h3><ol>
+<li>SpringBootTest02WebApplication同级目录创建config文件夹</li>
+<li>创建MyMVCConfig类</li>
+<li>&#x3D;&#x3D;<strong>添加@Configuration注解</strong>&#x3D;&#x3D;</li>
+<li>实现WebMvcConfigurer接口</li>
+<li>自定义静态内部类MyViewResolver实现ViewResolver接口重写其resolveViewName方法</li>
+<li>创建myViewResolver方法 return new MyViewResolver 并@Bean注入容器</li>
+</ol>
+<p>自定义配置</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 自定义配置日期格式</span></span><br><span class="line"><span class="attr">spring.mvc.date.date-format</span>=<span class="string">999-99-99</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="8-EmpManager"><a href="#8-EmpManager" class="headerlink" title="8. EmpManager"></a>8. EmpManager</h3><ol>
+<li><p>导入静态资源 准备工作</p>
+</li>
+<li><p>新建pojo</p>
+</li>
+<li><p>创建Department</p>
+<ul>
+<li>Integer id</li>
+<li>String departmentName</li>
+</ul>
+<p>创建Employee</p>
+<ul>
+<li>Integer id</li>
+<li>String lastName</li>
+<li>String email</li>
+<li>Integer gender    0-nv 1-nan</li>
+<li>Department department</li>
+<li>Date birth</li>
+</ul>
+<p>lomok</p>
+</li>
+<li><p>新建dao</p>
+</li>
+<li><p>模拟数据库中数据</p>
+<ol>
+<li>DepartmentDao <ul>
+<li>Map&lt; I D &gt; + static 静态代码块 </li>
+<li>获得所有部门信息</li>
+<li>通过id获得部门信息</li>
+</ul>
+</li>
+<li>EmployeeDao<ul>
+<li>Map&lt; I E&gt; + static 静态代码块</li>
+<li>默认生成日期</li>
+<li>主键自增</li>
+<li>增加一个员工</li>
+<li>查询全部员工信息</li>
+<li>通过id查询员工</li>
+<li>通过id删除员工</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>编写Controller 实现首页访问</p>
+<ol>
+<li>IndexController 或 在MyMvcConfig（实现WebMvcConfigurer接口	）中 重写addViewControllers</li>
+<li>改首页 thymeleaf 格式 th @ </li>
+<li>关闭模板引擎缓存</li>
+</ol>
+</li>
+<li><p>页面国际化</p>
+</li>
+<li><p>resources下建i18n</p>
+<ol>
+<li>目录下创建login.properties</li>
+<li>目录下创建login_zh_CN.properties</li>
+<li>目录下创建login_en_US.properties</li>
+<li>可视化插件</li>
+<li>配置login.tip login.password login.rememberme login.username login.btn</li>
+<li>配置文件的真实位置</li>
+<li>更改页面 #{}</li>
+</ol>
+</li>
+<li><p>新建MyLocaleResolver解析请求</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">&quot;btn btn-sm&quot;</span> <span class="attr">th:href</span>=<span class="string">&quot;@&#123;/index.html(l=&#x27;zh_CN&#x27;)&#125;&quot;</span>&gt;</span>中文<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">&quot;btn btn-sm&quot;</span> <span class="attr">th:href</span>=<span class="string">&quot;@&#123;/index.html(l=&#x27;en_US&#x27;)&#125;&quot;</span>&gt;</span>English<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>实现LocaleResolver接口</p>
+<p>解析请求 重写resolverLocale 和 setLocale方法</p>
+<p>将自定义的MyLocaleResolver组件配置到Spring容器中<code>@Bean</code></p>
+</li>
+<li><p>实现登录</p>
+<ol>
+<li>编写logincontroller</li>
+<li>input缺少name</li>
+<li>实现具体业务</li>
+</ol>
+</li>
+<li><p>拦截器 过滤登录</p>
+<ol>
+<li>新建LoginHandlerInterceptor</li>
+<li>实现HandlerInterceptor接口 preHandle postHandle afterCompletion</li>
+<li>preHandle 中写具体业务</li>
+<li>登录成功添加session</li>
+<li>拦截器中实现业务</li>
+</ol>
+</li>
+<li><p>完成CRUD</p>
+<ol>
+<li><p>新建EmployeeController</p>
+</li>
+<li><p>到指向list</p>
+</li>
+<li><p>使用th:insert&#x3D;”~{dashboard::topbar}” 简化thymeleaf代码</p>
+</li>
+<li><p>提取公共页面  – 可以使用 ( ) 传参 并接收判断</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">th:fragment=&quot;sidebar&quot;</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">th:replace</span>=<span class="string">&quot;~&#123;commons/commons::sidebar(active=&#x27;list.html&#x27;)&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">th:class</span>=<span class="string">&quot;$&#123;active==&#x27;main.html&#x27;?&#x27;nav-link active&#x27;:&#x27;nav-link&#x27;&#125;&quot;</span> <span class="attr">th:href</span>=<span class="string">&quot;@&#123;/main.html&#125;&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>employees 遍历 取出值 列表循环展示</p>
+</li>
+<li><p>添加员工信息</p>
+<ol>
+<li>按钮跳转 add页面<ol>
+<li>查出所有部门的信息</li>
+</ol>
+</li>
+<li>添加员工成功</li>
+<li>返回首页</li>
+</ol>
+</li>
+<li><p>修改员工信息</p>
+<ol>
+<li>按钮跳转 update页面</li>
+<li>查出所要修改的员工信息</li>
+<li>修改员工信息</li>
+<li>返回首页</li>
+<li>注意 Date 信息的格式 避免400</li>
+<li>调整携带隐藏域 员工 id 避免持续增加</li>
+</ol>
+</li>
+<li><p>删除员工</p>
+<ol>
+<li>写controller</li>
+<li>写业务</li>
+</ol>
+</li>
+<li><p>处理404</p>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="9-SpringBoot整合JDBC"><a href="#9-SpringBoot整合JDBC" class="headerlink" title="9. SpringBoot整合JDBC"></a>9. SpringBoot整合JDBC</h3><ol>
+<li><p>创建项目文件</p>
+</li>
+<li><p>编写application.yml文件 连接mybatis数据库</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">datasource:</span></span><br><span class="line">    <span class="attr">username:</span> <span class="string">root</span></span><br><span class="line">    <span class="attr">password:</span> <span class="number">123456</span></span><br><span class="line">    <span class="attr">url:</span> <span class="string">jdbc:mysql://localhost:3306/mybatis?useUnicode=true&amp;characterEncoding=utf-8</span></span><br><span class="line">    <span class="attr">driver-class-name:</span> <span class="string">com.mysql.jdbc.Driver</span></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">datasource:</span></span><br><span class="line">    <span class="attr">username:</span> <span class="string">root</span></span><br><span class="line">    <span class="attr">password:</span> <span class="number">123456</span></span><br><span class="line">    <span class="comment"># 如果时区报错 就增加一个时区的配置 </span></span><br><span class="line">    <span class="attr">url:</span> <span class="string">jdbc:mysql://localhost:3306/mybatis?serverTimezone=UTC&amp;useUnicode=true&amp;characterEncoding=utf-8</span></span><br><span class="line">    <span class="attr">driver-class-name:</span> <span class="string">com.mysql.jdbc.Driver</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>注入datasource测试 </p>
+<p>数据源使用class com.zaxxer.hikari.HikariDataSource</p>
+</li>
+<li><p>编写JdbcController 使用SpringBoot提供的JdbcTemplate 类直接操作</p>
+</li>
+<li><p>不使用实体类 直接使用map封装搬运</p>
+</li>
+<li><p>实现CRUD </p>
+<p>springboot中jdbc自动提交事务</p>
+</li>
+</ol>
+<h3 id="10-SpringBoot整合Druid"><a href="#10-SpringBoot整合Druid" class="headerlink" title="10. SpringBoot整合Druid"></a>10. SpringBoot整合Druid</h3><ol>
+<li><p>导入Druid依赖</p>
+</li>
+<li><p>创建DruidConfig 并将DruidConfig 绑定application.yml</p>
+<ol>
+<li>注入bean</li>
+<li>配置@ConfigurationProperties(prefix &#x3D; “spring.datasource”)</li>
+</ol>
+</li>
+<li><p>编写ServletRegistrationBean后台配置 并完成初始化配置 注册bean</p>
+<p>注意：SpringBoot 内置了 servlet容器 所以没有web.xml 代替方法 ServletRegistrationBean</p>
+</li>
+<li><p>编写配置filter</p>
+</li>
+</ol>
+<h3 id="11-SpringBoot整合Mybatis"><a href="#11-SpringBoot整合Mybatis" class="headerlink" title="11. SpringBoot整合Mybatis"></a>11. SpringBoot整合Mybatis</h3><ol>
+<li><p>导入mybatis整合SpringBoot的依赖包</p>
+</li>
+<li><p>application.properties中配置数据库信息 并Autowired DataSource测试其可连接</p>
+</li>
+<li><p>创建pojo user 导入lombok</p>
+</li>
+<li><p>编写mapper接口类 mapper映射文件 </p>
+<ol>
+<li>@Mapper绑定 或者 @MapperScan扫描</li>
+<li>@Repository 注入容器</li>
+<li>拿mapper映射文件头部</li>
+<li>application.properties中整合mybatis</li>
+</ol>
+<p>注意：classpath指resource </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">classpath:mybatis/mapper/*.xml</span><br><span class="line">classpath:/mybatis/mapper/*.xml //指从项目根目录开始找</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>写controller</p>
+</li>
+<li><p>注入UserMapper</p>
+</li>
+<li><p>写接口</p>
+</li>
+<li><p>测试</p>
+</li>
+</ol>
+<h3 id="12-SpringBoot整合SpringSecurity"><a href="#12-SpringBoot整合SpringSecurity" class="headerlink" title="12. SpringBoot整合SpringSecurity"></a>12. SpringBoot整合SpringSecurity</h3><ol>
+<li><p>创建新SpringBoot项目</p>
+</li>
+<li><p>导入thymeleaf模板引擎</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- thymeleaf模板 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.thymeleaf<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>thymeleaf-spring5<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.thymeleaf.extras<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>thymeleaf-extras-java8time<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编写RouterController</p>
+</li>
+<li><p>导入SpringSecurity依赖</p>
+</li>
+<li><p>新建 SecurityConfig 使用@EnableWebSecurity注解并继承 WebSecurityConfigurerAdapter</p>
+</li>
+<li><p>重写configure方法</p>
+<p>认证和授权 – 链式编程</p>
+</li>
+<li><p>完成登录认证</p>
+</li>
+<li><p>编写注销认证 – 后端开启 – 前端编写注销功能</p>
+</li>
+<li><p>优化 不同角色只能看到相对应的标签 导入security-thymeleaf整合包</p>
+<p>–&gt; 未登录 ： 首页 登录</p>
+<p>–&gt; 已登录 ： 首页 用户名 注销</p>
+<ol>
+<li><p>导入命名空间</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xmlns:sec=&quot;http://www.thymeleaf.org/thymeleaf-extras-springsecurity5&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改前端</p>
+</li>
+</ol>
+</li>
+<li><p>CSRF</p>
+</li>
+</ol>
+<h3 id="13-SpringBoot整合Shiro"><a href="#13-SpringBoot整合Shiro" class="headerlink" title="13. SpringBoot整合Shiro"></a>13. SpringBoot整合Shiro</h3><ol>
+<li><p>创建maven项目 创建子工程</p>
+</li>
+<li><p>导入相关依赖于文件</p>
+</li>
+<li><p>编写log4j文件 和 shiro.ini文件</p>
+</li>
+<li><p>复制github上的代码quickstart</p>
+</li>
+<li><p>注意ini文件编码应该为ANSI 格式</p>
+</li>
+<li><p>–&gt; SpringBoot 中集成 Shiro</p>
+</li>
+<li><p>导入 shiro 整合spring的包 华为云 有问题待解决</p>
+</li>
+<li><p>配置ShiroConfig</p>
+</li>
+<li><p>编写UserRealm并继承</p>
+</li>
+<li><p>自定义 UserRealm extends AuthorizingRealm</p>
+</li>
+<li><p>完成ShiroConfig三步</p>
+</li>
+</ol>
+<p>shiro整合thymeleaf</p>
+<ol>
+<li>导入shiro整合thymeleaf依赖包</li>
+<li>编写shiroconfig 并注入spring容器 bean</li>
+<li>编写前端 thymeleaf规则</li>
+<li>优化 –&gt; 登陆后判断session隐藏登录按钮</li>
+</ol>
+<h3 id="14-SpringBoot集成Swagger"><a href="#14-SpringBoot集成Swagger" class="headerlink" title="14. SpringBoot集成Swagger"></a>14. SpringBoot集成Swagger</h3><ol>
+<li><p>导入Swagger需要Springfox</p>
+</li>
+<li><p>导入Swagger需要的依赖</p>
+</li>
+<li><p>新建SpringBoot-web项目</p>
+</li>
+<li><p>导入相关依赖</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger2 --&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;io.springfox&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;springfox-swagger2&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;2.9.2&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui --&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;io.springfox&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;springfox-swagger-ui&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;2.9.2&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编写hello工程测试</p>
+</li>
+<li><p>配置Swagger –Config 开启Swagger2</p>
+</li>
+<li><p>测试运行Swagger2默认 <a target="_blank" rel="noopener" href="http://localhost:8080/swagger-ui.html">http://localhost:8080/swagger-ui.html</a></p>
+</li>
+<li><p>配置 Swagger – 配置docket</p>
+</li>
+<li><p>Swagger配置扫描接口</p>
+</li>
+<li><p>配置Swagger API 文档的分组</p>
+</li>
+<li><p>配置 Swagger 实体类文档</p>
+</li>
+<li><p>Swagger提供在线测试Api接口</p>
+</li>
+</ol>
+<p>总结：</p>
+<ol>
+<li>可以使用Swagger给一些比较难理解的属性或接口 增加注释信息</li>
+<li>接口文档实时更新</li>
+<li>Swagger提供在线测试平台</li>
+<li>注意：正式发布时 必须关闭Sagger 出于安全考虑 –节省运行内存</li>
+</ol>
+<h3 id="15-SpringBoot–任务"><a href="#15-SpringBoot–任务" class="headerlink" title="15. SpringBoot–任务"></a>15. SpringBoot–任务</h3><ul>
+<li><p>异步任务</p>
+<p>使用多线程模拟</p>
+<ol>
+<li>@Async 开启线程池</li>
+<li>在main方法中开启这个功能</li>
+<li>达到秒刷新 但是后台线程仍在运行</li>
+</ol>
+</li>
+<li><p>定时任务</p>
+<ul>
+<li><p>使用到类与注解</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">TaskScheduler	任务调度着</span><br><span class="line">TaskExecutor	任务执行者</span><br><span class="line"></span><br><span class="line">@EnableScheduling	开启定时功能</span><br><span class="line">@Scheduled	开始定时功能的时间</span><br><span class="line">Cron表达式</span><br></pre></td></tr></table></figure>
+</li>
+<li><ol>
+<li>开启定时功能@EnableScheduling</li>
+<li>设置定时时间@Scheduled</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>邮件发送</p>
+<ol>
+<li>导入SpringBoot-mail依赖</li>
+<li>配置application.properties</li>
+<li>简单邮件示例</li>
+<li>复杂邮件示例</li>
+</ol>
+</li>
+</ul>
+<h3 id="16-SpringBoot整合Redis"><a href="#16-SpringBoot整合Redis" class="headerlink" title="16. SpringBoot整合Redis"></a>16. SpringBoot整合Redis</h3><p>Jedis –&gt; 原生API     lettuce  –&gt; 新版</p>
+<p>SpringBoot操作数据 都封装到Spring-Data中</p>
+<p>包括jpa jdbc mongodb redis</p>
+<p>整合RedisUtil</p>
+<h3 id="17-Dubbo及Zookeeper"><a href="#17-Dubbo及Zookeeper" class="headerlink" title="17. Dubbo及Zookeeper"></a>17. Dubbo及Zookeeper</h3><ol>
+<li>新建项目</li>
+<li>导入 dubbo zookeeper 依赖</li>
+<li>配置 端口号 以及 注册中心</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>Linyuxuan
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="https://negativefunction.github.io/2022/07/07/SpringBoot-3/" title="SpringBoot-3">https://negativefunction.github.io/2022/07/07/SpringBoot-3/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/06/29/SpringBoot-2/" rel="prev" title="SpringBoot-2">
+      <i class="fa fa-chevron-left"></i> SpringBoot-2
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/10/07/MySQL/" rel="next" title="MySQL">
+      MySQL <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SpringBoot-Note-02-%E5%AE%9E%E8%B7%B5%E4%B8%8E%E5%BA%94%E7%94%A8%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3"><span class="nav-number">1.</span> <span class="nav-text">SpringBoot_Note_02_实践与应用中文文档</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E7%AC%AC%E4%B8%80%E4%B8%AASpringBoot%E9%A1%B9%E7%9B%AE"><span class="nav-number">1.1.</span> <span class="nav-text">1. 第一个SpringBoot项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-yaml%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.</span> <span class="nav-text">2. yaml配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-JSR303%E6%A0%A1%E9%AA%8C"><span class="nav-number">1.3.</span> <span class="nav-text">3. JSR303校验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%A4%9A%E7%8E%AF%E5%A2%83-%E5%A4%9A%E9%85%8D%E7%BD%AE"><span class="nav-number">1.4.</span> <span class="nav-text">4. 多环境 多配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-SpringBoot-Web-%E5%BC%80%E5%8F%91"><span class="nav-number">1.5.</span> <span class="nav-text">5. SpringBoot Web 开发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-Thymeleaf%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E"><span class="nav-number">1.6.</span> <span class="nav-text">6. Thymeleaf模板引擎</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-MVC-Config"><span class="nav-number">1.7.</span> <span class="nav-text">7. MVC Config</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-EmpManager"><span class="nav-number">1.8.</span> <span class="nav-text">8. EmpManager</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-SpringBoot%E6%95%B4%E5%90%88JDBC"><span class="nav-number">1.9.</span> <span class="nav-text">9. SpringBoot整合JDBC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-SpringBoot%E6%95%B4%E5%90%88Druid"><span class="nav-number">1.10.</span> <span class="nav-text">10. SpringBoot整合Druid</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-SpringBoot%E6%95%B4%E5%90%88Mybatis"><span class="nav-number">1.11.</span> <span class="nav-text">11. SpringBoot整合Mybatis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-SpringBoot%E6%95%B4%E5%90%88SpringSecurity"><span class="nav-number">1.12.</span> <span class="nav-text">12. SpringBoot整合SpringSecurity</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-SpringBoot%E6%95%B4%E5%90%88Shiro"><span class="nav-number">1.13.</span> <span class="nav-text">13. SpringBoot整合Shiro</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-SpringBoot%E9%9B%86%E6%88%90Swagger"><span class="nav-number">1.14.</span> <span class="nav-text">14. SpringBoot集成Swagger</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15-SpringBoot%E2%80%93%E4%BB%BB%E5%8A%A1"><span class="nav-number">1.15.</span> <span class="nav-text">15. SpringBoot–任务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-SpringBoot%E6%95%B4%E5%90%88Redis"><span class="nav-number">1.16.</span> <span class="nav-text">16. SpringBoot整合Redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#17-Dubbo%E5%8F%8AZookeeper"><span class="nav-number">1.17.</span> <span class="nav-text">17. Dubbo及Zookeeper</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Linyuxuan"
+      src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/05.jpg">
+  <p class="site-author-name" itemprop="name">Linyuxuan</p>
+  <div class="site-description" itemprop="description">Hope Sometimes Love Brain</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa-gift"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Linyuxuan</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+
+    </div>
+</body>
+</html>
