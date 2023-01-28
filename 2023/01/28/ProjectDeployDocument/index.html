@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/logo.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/logo.png">
+  <link rel="mask-icon" href="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/logo.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"negativefunction.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="项目部署文档原生方式web 服务器：nginx 、apache、tomcat https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;425790769 前端Nginx安装 nginx 服务器：  用系统自带的软件包管理器快速安装，比如 centos 的 yum 官网安装（参考文章）  12345678910111213141516171819202122cd mkdir servicescd">
+<meta property="og:type" content="article">
+<meta property="og:title" content="项目部署文档">
+<meta property="og:url" content="https://negativefunction.github.io/2023/01/28/ProjectDeployDocument/index.html">
+<meta property="og:site_name" content="Welcome To Lin&#39;s World">
+<meta property="og:description" content="项目部署文档原生方式web 服务器：nginx 、apache、tomcat https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;425790769 前端Nginx安装 nginx 服务器：  用系统自带的软件包管理器快速安装，比如 centos 的 yum 官网安装（参考文章）  12345678910111213141516171819202122cd mkdir servicescd">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230127102142175.png">
+<meta property="og:image" content="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230127102247741.png">
+<meta property="og:image" content="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230127102805807.png">
+<meta property="og:image" content="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230127102747455.png">
+<meta property="og:image" content="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230127102837965.png">
+<meta property="og:image" content="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230127102917343.png">
+<meta property="og:image" content="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230127103125822.png">
+<meta property="og:image" content="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230127103315235.png">
+<meta property="og:image" content="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230127103446537.png">
+<meta property="og:image" content="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230127103854809.png">
+<meta property="og:image" content="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230127104056349.png">
+<meta property="og:image" content="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230127104710471.png">
+<meta property="og:image" content="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230127104802350.png">
+<meta property="og:image" content="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128022747566.png">
+<meta property="og:image" content="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128022848541.png">
+<meta property="og:image" content="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128023013650.png">
+<meta property="og:image" content="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128023233763.png">
+<meta property="og:image" content="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128023317022.png">
+<meta property="og:image" content="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128023344187.png">
+<meta property="og:image" content="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128023459054.png">
+<meta property="og:image" content="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128023711481.png">
+<meta property="og:image" content="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128023754360.png">
+<meta property="og:image" content="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128024227322.png">
+<meta property="og:image" content="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128024249532.png">
+<meta property="og:image" content="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128024316010.png">
+<meta property="og:image" content="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128024632845.png">
+<meta property="og:image" content="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128023855595.png">
+<meta property="og:image" content="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128024109898.png">
+<meta property="og:image" content="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128024825050.png">
+<meta property="og:image" content="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128100138799.png">
+<meta property="og:image" content="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128025223232.png">
+<meta property="og:image" content="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128025541364.png">
+<meta property="og:image" content="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128030233837.png">
+<meta property="og:image" content="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128030310670.png">
+<meta property="og:image" content="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128030510527.png">
+<meta property="og:image" content="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128030745898.png">
+<meta property="article:published_time" content="2023-01-28T02:18:03.000Z">
+<meta property="article:modified_time" content="2023-01-28T02:18:41.037Z">
+<meta property="article:author" content="Linyuxuan">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230127102142175.png">
+
+<link rel="canonical" href="https://negativefunction.github.io/2023/01/28/ProjectDeployDocument/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>项目部署文档 | Welcome To Lin's World</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Welcome To Lin's World</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">The Future Will Come</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">17</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://negativefunction.github.io/2023/01/28/ProjectDeployDocument/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/05.jpg">
+      <meta itemprop="name" content="Linyuxuan">
+      <meta itemprop="description" content="Hope Sometimes Love Brain">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Welcome To Lin's World">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          项目部署文档
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-01-28 10:18:03 / Modified: 10:18:41" itemprop="dateCreated datePublished" datetime="2023-01-28T10:18:03+08:00">2023-01-28</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="项目部署文档"><a href="#项目部署文档" class="headerlink" title="项目部署文档"></a>项目部署文档</h1><h2 id="原生方式"><a href="#原生方式" class="headerlink" title="原生方式"></a>原生方式</h2><p>web 服务器：<strong>nginx</strong> 、apache、tomcat</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/425790769">https://zhuanlan.zhihu.com/p/425790769</a></p>
+<h3 id="前端"><a href="#前端" class="headerlink" title="前端"></a>前端</h3><h4 id="Nginx"><a href="#Nginx" class="headerlink" title="Nginx"></a>Nginx</h4><p>安装 nginx 服务器：</p>
+<ol>
+<li>用系统自带的软件包管理器快速安装，比如 centos 的 yum</li>
+<li>官网安装（参考文章）</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> </span><br><span class="line"><span class="built_in">mkdir</span> services</span><br><span class="line"><span class="built_in">cd</span> services</span><br><span class="line"></span><br><span class="line">curl -o nginx-1.21.6.tar.gz http://nginx.org/download/nginx-1.21.6.tar.gz</span><br><span class="line"></span><br><span class="line">tar -zxvf nginx-1.21.6.tar.gz</span><br><span class="line"></span><br><span class="line">./configure</span><br><span class="line"></span><br><span class="line">yum install pcre pcre-devel -y</span><br><span class="line">yum install openssl openssl-devel -y</span><br><span class="line"></span><br><span class="line">./configure</span><br><span class="line"></span><br><span class="line">./configure --with-http_ssl_module --with-http_v2_module --with-stream</span><br><span class="line"></span><br><span class="line">make</span><br><span class="line"></span><br><span class="line">make install</span><br><span class="line"></span><br><span class="line"><span class="built_in">ls</span> /usr/local/nginx/sbin/nginx</span><br></pre></td></tr></table></figure>
+
+
+
+<p>配置 Nginx 环境变量</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/profile</span><br><span class="line">在最后一行添加：</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:/usr/local/nginx/sbin</span><br><span class="line"></span><br><span class="line"><span class="built_in">source</span> /etc/profile</span><br><span class="line"></span><br><span class="line">nginx</span><br><span class="line"></span><br><span class="line">netstat -ntlp 查看启动情况</span><br></pre></td></tr></table></figure>
+
+
+
+<p>配置 nginx config 配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> nginx-1.21.6</span><br><span class="line"><span class="built_in">ls</span></span><br><span class="line"><span class="built_in">cp</span> nginx.conf nginx.default.conf</span><br><span class="line"><span class="built_in">cat</span> nginx.conf</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">unzip dist.zip -d user-center-front</span><br><span class="line"><span class="built_in">cd</span> user-center-front/dist</span><br><span class="line"><span class="built_in">ls</span></span><br><span class="line"><span class="built_in">mv</span> * ../</span><br><span class="line"><span class="built_in">rm</span> -rf dist</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">vim /usr/local/nginx/nginx.conf</span><br><span class="line"><span class="built_in">cp</span> nginx.conf nginx.default.conf</span><br><span class="line"></span><br><span class="line"><span class="comment">###</span></span><br><span class="line">user root;</span><br><span class="line">....</span><br><span class="line">server &#123;</span><br><span class="line">	listen	80;</span><br><span class="line">	server_name localhost;</span><br><span class="line">	location / &#123;</span><br><span class="line">		root /root/services/user-center-front</span><br><span class="line">		index index.html index.htm;</span><br><span class="line">	&#125;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br><span class="line">...</span><br><span class="line"><span class="comment">###</span></span><br><span class="line"></span><br><span class="line">nginx -s reload</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="后端"><a href="#后端" class="headerlink" title="后端"></a>后端</h3><p>java</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">yum install -y java-1.8.0-openjdk*</span><br><span class="line"></span><br><span class="line">curl -o apache-maven-3.8.5-bin.tar.gz https://dlcdn.apache.org/maven/maven-3/3.8.5/binaries/apache-maven-3.8.5-bin.tar.gz</span><br><span class="line"><span class="comment"># 或者自己上传</span></span><br><span class="line"></span><br><span class="line">tar -zxvf apache-maven-3.8.5-bin.tar.gz</span><br><span class="line"><span class="built_in">cd</span> apache-maven-3.8.5</span><br><span class="line"></span><br><span class="line">vim /etc/profile</span><br><span class="line">在最后一行添加：</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:/usr/local/nginx/sbin:/root/services/apache-maven-3.8.5/bin</span><br><span class="line"><span class="built_in">source</span> /etc/profile</span><br><span class="line"></span><br><span class="line">mvn -v</span><br><span class="line">mvn --<span class="built_in">help</span></span><br><span class="line">java -version</span><br></pre></td></tr></table></figure>
+
+
+
+<p>maven</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> xxx 下载代码</span><br><span class="line">mvn package -DskipTests</span><br></pre></td></tr></table></figure>
+
+
+
+<p>java</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">java -jar ./user-center-backend-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod</span><br><span class="line"></span><br><span class="line"><span class="built_in">chmod</span> a+x user-center-backend-0.0.1-SNAPSHOT.jar</span><br><span class="line"><span class="built_in">ls</span></span><br><span class="line"><span class="built_in">nohup</span> java -jar ./user-center-backend-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod &amp;</span><br><span class="line"></span><br><span class="line"><span class="built_in">jobs</span></span><br><span class="line">netstat -ntlp 查看启动情况</span><br><span class="line">jps</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="宝塔Linux"><a href="#宝塔Linux" class="headerlink" title="宝塔Linux"></a>宝塔Linux</h2><p>Linux运维面板 –可视化的操作linux</p>
+<p><strong>云服务器开放端口</strong></p>
+<p><strong>Centos安装脚本</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y wget &amp;&amp; wget -O install.sh http://download.bt.cn/install/install_6.0.sh &amp;&amp; sh install.sh ed8484bec</span><br></pre></td></tr></table></figure>
+
+
+
+<p>腾讯云面板安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo /etc/init.d/bt default</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="安装-Nginx"><a href="#安装-Nginx" class="headerlink" title="安装 Nginx"></a>安装 Nginx</h3><img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230127102142175.png" alt="image-20230127102142175" style="zoom:67%;margin-left:0" />
+
+
+
+<h3 id="安装java"><a href="#安装java" class="headerlink" title="安装java"></a>安装java</h3><img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230127102247741.png" alt="image-20230127102247741" style="zoom:67%;margin-left:0" />
+
+
+
+<h3 id="网站布置"><a href="#网站布置" class="headerlink" title="网站布置"></a>网站布置</h3><img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230127102805807.png" alt="image-20230127102805807" style="zoom:67%;margin-left:0" />
+
+<img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230127102747455.png" alt="image-20230127102747455" style="zoom:67%;margin-left:0" />
+
+<img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230127102837965.png" alt="image-20230127102837965" style="zoom:67%;margin-left:0" />
+
+
+
+<img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230127102917343.png" alt="image-20230127102917343" style="zoom:67%;margin-left:0" />
+
+
+
+<p><strong>直接访问，BT会帮助修改配置，将IP映射到目录下</strong></p>
+<h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230127103125822.png" alt="image-20230127103125822" style="zoom:67%;margin-left:0" />
+
+
+
+<h3 id="后端部署"><a href="#后端部署" class="headerlink" title="后端部署"></a>后端部署</h3><p><strong>上传文件</strong></p>
+<img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230127103315235.png" alt="image-20230127103315235" style="zoom:67%;margin-left:0" />
+
+
+
+<img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230127103446537.png" alt="image-20230127103446537" style="zoom:67%;margin-left:0" />
+
+
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -ef|grep <span class="string">&#x27;8080&#x27;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230127103854809.png" alt="image-20230127103854809" style="zoom:67%;margin-left:0" />
+
+<p><strong>腾讯云开放 8080 项目端口</strong></p>
+<img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230127104056349.png" alt="image-20230127104056349" style="zoom:67%;margin-left:0" />
+
+
+
+<p><strong>BT白名单放行 8080 项目端口</strong></p>
+<h2 id="Docker容器"><a href="#Docker容器" class="headerlink" title="Docker容器"></a>Docker容器</h2><p><em>docker 是容器，可以将项目的环境（比如 java、nginx）和项目的代码一起打包成镜像，所有同学都能下载镜像，更容易分发和移植 –下载镜像 制作镜像 封装镜像</em></p>
+<p><em>使得启动项目时，不需要敲一大堆命令，而是直接下载镜像、启动镜像就可以了</em></p>
+<p><em>可以理解为软件安装包</em></p>
+<h3 id="安装-Docker"><a href="#安装-Docker" class="headerlink" title="安装 Docker"></a>安装 Docker</h3><p>Docker 安装：<a target="_blank" rel="noopener" href="https://www.docker.com/get-started/">https://www.docker.com/get-started/</a> 或者宝塔安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -version</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>BT安装 docker</strong></p>
+<img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230127104710471.png" alt="image-20230127104710471" style="zoom:67%;margin-left:0" />
+
+
+
+<img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230127104802350.png" alt="image-20230127104802350" style="zoom:67%;margin-left:0" />
+
+
+
+<p>查看 docker 安装成功</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker -v</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="制作-Dockerfile"><a href="#制作-Dockerfile" class="headerlink" title="制作 Dockerfile"></a>制作 Dockerfile</h3><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> maven:<span class="number">3.5</span>-jdk-<span class="number">8</span>-alpine as builder</span><br><span class="line"></span><br><span class="line"><span class="comment"># Copy local code to the container image.</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /app</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> pom.xml .</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> src ./src</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Build a release artifact.</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> mvn package -DskipTests</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Run the web service on container startup.</span></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [<span class="string">&quot;java&quot;</span>,<span class="string">&quot;-jar&quot;</span>,<span class="string">&quot;/app/target/user-center-backend-0.0.1-SNAPSHOT.jar&quot;</span>,<span class="string">&quot;--spring.profiles.active=prod&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> nginx</span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /usr/share/nginx/html/</span></span><br><span class="line"><span class="keyword">USER</span> root</span><br><span class="line"></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> ./docker/nginx.conf /etc/nginx/conf.d/default.conf</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> ./dist  /usr/share/nginx/html/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">80</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [<span class="string">&quot;nginx&quot;</span>, <span class="string">&quot;-g&quot;</span>, <span class="string">&quot;daemon off;&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>nginx.conf</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line"></span><br><span class="line">    # gzip config</span><br><span class="line">    gzip on;</span><br><span class="line">    gzip_min_length 1k;</span><br><span class="line">    gzip_comp_level 9;</span><br><span class="line">    gzip_types text/plain text/css text/javascript application/json application/javascript application/x-javascript application/xml;</span><br><span class="line">    gzip_vary on;</span><br><span class="line">    gzip_disable &quot;MSIE [1-6]\.&quot;;</span><br><span class="line"></span><br><span class="line">    root /usr/share/nginx/html;</span><br><span class="line">    include /etc/nginx/mime.types;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        try_files $uri /index.html;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>CMD &#x2F; ENTRYPOINT（附加额外参数）指定运行容器时默认执行的命令</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo git <span class="built_in">clone</span> xxxx</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>最好直接上传已经构建好的 dist 目录</strong></p>
+<h3 id="根据-Dockerfile-构建对象"><a href="#根据-Dockerfile-构建对象" class="headerlink" title="根据 Dockerfile 构建对象"></a>根据 Dockerfile 构建对象</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在有 dockerfile 的目录下</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># -t 打标签</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 后端</span></span><br><span class="line">docker build -t user-center-backend:v0.0.1 .</span><br><span class="line"></span><br><span class="line"><span class="comment"># 前端</span></span><br><span class="line">docker build -t user-center-front:v0.0.1 .</span><br></pre></td></tr></table></figure>
+
+<p><strong>Docker 构建优化：减少尺寸、减少构建时间（比如多阶段构建，可以丢弃之前阶段不需要的内容）</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看已拉取所有镜像</span></span><br><span class="line">docker images</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>docker run 启动</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 前端</span></span><br><span class="line">docker run -p 80:80 -d user-center-frontend:v0.0.1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 后端</span></span><br><span class="line">docker run -p 8080:8080 user-center-backend:v0.0.1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试 docker</span></span><br><span class="line">sudo docker run hello-world</span><br><span class="line"><span class="comment"># 会先启动本地镜像，如果本地镜像没有，docker会从远程仓库拉取镜像</span></span><br><span class="line"><span class="comment"># Unable to find image &#x27;hello-world:latest&#x27; locally</span></span><br><span class="line"><span class="comment"># latest: Pulling from library/hello-world</span></span><br><span class="line"><span class="comment"># 2db29710123e: Pull complete</span></span><br><span class="line"><span class="comment"># ......</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>虚拟化</p>
+<ol>
+<li>端口映射：把本机的资源（实际访问地址）和容器内部的资源（应用启动端口）进行关联</li>
+<li>目录映射：把本机的端口和容器应用的端口进行关联</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker run [OPTIONS] IMAGE [COMMAND] [ARG...]</span><br><span class="line"></span><br><span class="line">docker run -p 80:80 -v /data:/data -d nginx:latest</span><br><span class="line">docker run -p 主机(宿机)端口:容器端口 -v 主机目录:容器目录</span><br><span class="line"></span><br><span class="line">docker run -p 127.0.0.1:80:8080/tcp ubuntu bash</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>启动 docker</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo docker run -p 80:80 -v /data/app:/usr/share/nginx/html -d user-center-frontend:v0.0.1</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>进入容器</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看已启动的 docker 容器</span></span><br><span class="line">sudo docker ps</span><br><span class="line"><span class="comment"># 查看 docker 容器 id</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入容器</span></span><br><span class="line">docker <span class="built_in">exec</span> -i -t  fee2bbb7c9ee /bin/bash</span><br><span class="line">docker <span class="built_in">exec</span> -i -t  &lt;dockerID&gt; /bin/bash</span><br><span class="line"><span class="comment"># -i 交互式 -t 分配终端 （启动哪种命令的终端）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 退出容器</span></span><br><span class="line"><span class="built_in">exit</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 杀死已启动容器</span></span><br><span class="line">docker <span class="built_in">kill</span> fee2bbb7c9ee</span><br><span class="line">docker <span class="built_in">kill</span> &lt;dockerID&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重新启动</span></span><br><span class="line">docker run -p 80:80 -d user-center-frontend:v0.0.1</span><br><span class="line"><span class="comment"># -d 以后台的方式启动docker容器</span></span><br><span class="line">docker run -p 80:80 user-center-frontend:v0.0.1</span><br><span class="line"><span class="comment"># 不使用 -d 启动 docker 会使服务器终端直接卡住 类似 jar 启动</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看 docker 日志</span></span><br><span class="line">docker ps</span><br><span class="line">sudo docker logs &lt;dockerID&gt;</span><br><span class="line">sudo docker logs  fee2bbb7c9ee</span><br><span class="line">sudo docker logs  fee2bbb7c9ee -f</span><br><span class="line"><span class="comment"># -f 跟踪实时输出日志</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除镜像】</span></span><br><span class="line">sudo docker rmi -f hello-world</span><br><span class="line"><span class="comment"># rmi --remove image</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 后端 docker 启动</span></span><br><span class="line">docker run -p 8080:8080 user-center-backend:v0.0.1</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><a target="_blank" rel="noopener" href="https://www.runoob.com/docker/docker-tutorial.html">https://www.runoob.com/docker/docker-tutorial.html</a></p>
+<h2 id="容器平台部署"><a href="#容器平台部署" class="headerlink" title="容器平台部署"></a>容器平台部署</h2><p><strong>容器平台的优势</strong></p>
+<ol>
+<li>不用输命令来操作，更方便省事</li>
+<li>不用在控制台操作，更傻瓜式、更简单</li>
+<li>大厂运维，比自己运维更省心</li>
+<li>额外的能力，比如<strong>监控、告警、其他（存储、负载均衡、自动扩缩容、流水线）</strong></li>
+</ol>
+<h3 id="腾讯云"><a href="#腾讯云" class="headerlink" title="腾讯云"></a>腾讯云</h3><h3 id="阿里云"><a href="#阿里云" class="headerlink" title="阿里云"></a>阿里云</h3><h3 id="前端webify"><a href="#前端webify" class="headerlink" title="前端webify"></a>前端webify</h3><p>webify –web化</p>
+<p>web应用托管</p>
+<p><strong>比容器化更傻瓜式</strong></p>
+<ol>
+<li>从代码托管平台拉取Code</li>
+</ol>
+<img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128022747566.png" alt="image-20230128022747566" style="zoom:67%;margin-left:0" />
+
+<ol start="2">
+<li>自动识别并构建</li>
+</ol>
+<img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128022848541.png" alt="image-20230128022848541" style="zoom:67%;margin-left:0" />
+
+<ol start="3">
+<li>每次更新代码，提交代码后，都会触发一次新的部署（避免了每次都要重新构建发布）</li>
+</ol>
+<img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128023013650.png" alt="image-20230128023013650" style="zoom:67%;margin-left:0" />
+
+
+
+
+
+
+
+
+
+<h3 id="后端微信云托管"><a href="#后端微信云托管" class="headerlink" title="后端微信云托管"></a>后端微信云托管</h3><h4 id="前端部署"><a href="#前端部署" class="headerlink" title="前端部署"></a>前端部署</h4><ol>
+<li>使用 微信云托管平台</li>
+</ol>
+<img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128023233763.png" alt="image-20230128023233763" style="zoom:67%;margin-left:0" />
+
+<ol start="2">
+<li>选择一个环境新建服务</li>
+</ol>
+<img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128023317022.png" alt="image-20230128023317022" style="zoom:67%;margin-left:0" />
+
+<ol start="3">
+<li>新建服务</li>
+</ol>
+<img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128023344187.png" alt="image-20230128023344187" style="zoom:67%;margin-left:0" />
+
+<ol start="4">
+<li>选择代码 -&gt; 平台自动构建</li>
+</ol>
+<img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128023459054.png" alt="image-20230128023459054" style="zoom:67%;margin-left:0" />
+
+<ol start="5">
+<li>手动上传代码包 注意不上传 依赖文件夹 -&gt; 如果项目文件太大，可以只上传 dist docker Dockerfile</li>
+</ol>
+<img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128023711481.png" alt="image-20230128023711481" style="zoom:67%;margin-left:0" />
+
+<ol start="6">
+<li>平台自动构建</li>
+</ol>
+<img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128023754360.png" alt="image-20230128023754360" style="zoom:67%;margin-left:0" />
+
+<ol start="7">
+<li><strong>平台增值功能 云端调试 回退版本 日志监控 服务配置（LVS） 等</strong></li>
+</ol>
+<img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128024227322.png" alt="image-20230128024227322" style="zoom:67%;margin-left:0" />
+
+<img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128024249532.png" alt="image-20230128024249532" style="zoom:67%;margin-left:0" />
+
+<img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128024316010.png" alt="image-20230128024316010" style="zoom:67%;margin-left:0" />
+
+<ol start="8">
+<li><strong>微信云托管 提供临时 域名 可以直接访问测试</strong></li>
+</ol>
+<img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128024632845.png" alt="image-20230128024632845" style="zoom:67%;margin-left:0" />
+
+
+
+
+
+<h4 id="后端部署-1"><a href="#后端部署-1" class="headerlink" title="后端部署"></a>后端部署</h4><ol>
+<li>创建新服务</li>
+</ol>
+<img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128023855595.png" alt="image-20230128023855595" style="zoom:67%;margin-left:0" />
+
+<ol start="2">
+<li>选择手动上传文件夹（根据 Dockerfile 的命令选择上传 jar 包 or 上传整个项目目录）-&gt; 选择默认配置</li>
+</ol>
+<img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128024109898.png" alt="image-20230128024109898" style="zoom:67%;margin-left:0" />
+
+<ol start="3">
+<li><p>同样会有流水线和代码更新自动构建</p>
+</li>
+<li><p>服务告警服务</p>
+</li>
+</ol>
+<img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128024825050.png" alt="image-20230128024825050" style="zoom:67%;margin-left:0" />
+
+
+
+<h3 id="Vercel"><a href="#Vercel" class="headerlink" title="Vercel"></a>Vercel</h3><p><strong>相当于一个云托管服务，可以将项目直接发布在这上面</strong></p>
+<p><strong>NEXT.JS conf –NEXT的作者写的</strong></p>
+<h4 id="Vercel前端部署"><a href="#Vercel前端部署" class="headerlink" title="Vercel前端部署"></a>Vercel前端部署</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">project-frontend&gt; vercel --prod</span><br><span class="line">y</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果没有 Vercel 账号需要注册</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>自动部署发布</strong></p>
+<img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128100138799.png" alt="image-20230128100138799" style="zoom:67%;margin-left:0" />
+
+<p><strong>Vercel可以（免备案！！！）</strong></p>
+<p><code>且 Vercel 免费</code></p>
+<h4 id="后端微信云托管-1"><a href="#后端微信云托管-1" class="headerlink" title="后端微信云托管"></a>后端微信云托管</h4><p>Dockerfile</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> maven:<span class="number">3.5</span>-jdk-<span class="number">8</span>-alpine as builder</span><br><span class="line"></span><br><span class="line"><span class="comment"># Copy local code to the container image.</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /app</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> pom.xml .</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> src ./src</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Build a release artifact.</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> mvn package -DskipTests</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Run the web service on container startup.</span></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [<span class="string">&quot;java&quot;</span>,<span class="string">&quot;-jar&quot;</span>,<span class="string">&quot;/app/target/yupao-backend-0.0.1-SNAPSHOT.jar&quot;</span>,<span class="string">&quot;--spring.profiles.active=prod&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>买个域名就可以直接用，直接使用别人的容器</strong></p>
+<h2 id="绑定域名"><a href="#绑定域名" class="headerlink" title="绑定域名"></a>绑定域名</h2><p>前端项目访问：用户输入网址 &#x3D;&gt; 域名解析服务器（把网址解析为 ip 地址 &#x2F; 交给其他的域名解析服务） &#x3D;&gt; 服务器 &#x3D;&gt;<strong>（防火墙）</strong>&#x3D;&gt; nginx 接收请求，找到对应的文件，返回文件给前端 &#x3D;&gt; 前端加载文件到浏览器中（js、css） &#x3D;&gt; 渲染页面</p>
+<p><em>BT面板有防火墙 -&gt; 需要 nginx 或 BT面板开启端口（直接在 nginx 中开启 接受域名的请求即可，详细见下文）</em></p>
+<p>后端项目访问：用户输入网址 &#x3D;&gt; 域名解析服务器 &#x3D;&gt; 服务器 &#x3D;&gt; nginx 接收请求 &#x3D;&gt; 后端项目（比如 8080端口）</p>
+<p>nginx 反向代理：替服务器接收请求，转发请求</p>
+<h3 id="BT绑定域名"><a href="#BT绑定域名" class="headerlink" title="BT绑定域名"></a>BT绑定域名</h3><h4 id="配置前端域名"><a href="#配置前端域名" class="headerlink" title="配置前端域名"></a>配置前端域名</h4><ol>
+<li><strong>域名注册商 例如 腾讯云使用 DNSPOD 解析 -&gt; 添加记录</strong></li>
+</ol>
+<img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128025223232.png" alt="image-20230128025223232" style="zoom:67%;margin-left:0" />
+
+<ol start="2">
+<li>BT面板给 nginx 添加域名站点</li>
+</ol>
+<img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128025541364.png" alt="image-20230128025541364" style="zoom:67%;margin-left:0" />
+
+<p><strong>注意 直接访问 服务器 IP 需要能找到相对应的 index.html 文件</strong></p>
+<p><em>如果在访问域名与IP url 路径时，如果匹配不了相对应的路由路径，就会直接去匹配默认的 index.html</em></p>
+<h4 id="配置后端域名"><a href="#配置后端域名" class="headerlink" title="配置后端域名"></a>配置后端域名</h4><ol>
+<li>DNSPOD配置</li>
+</ol>
+<img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128030233837.png" alt="image-20230128030233837" style="zoom:67%;margin-left:0" />
+
+<ol start="2">
+<li>处理端口号问题</li>
+</ol>
+<img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128030310670.png" alt="image-20230128030310670" style="zoom:67%;margin-left:0" />
+
+<ol start="3">
+<li>访问域名 -&gt; 直接访问 80 端口 -&gt; 访问 nginx -&gt; nginx 接受请求后 转发请求到指定后端服务端口</li>
+<li>重新新建一个服务 -&gt; <strong>配置 nginx config (nginx 不仅能做转发请求还能 -&gt; 改写请求 -&gt; 拦截请求 -&gt; …)</strong></li>
+</ol>
+<img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128030510527.png" alt="image-20230128030510527" style="zoom:67%;margin-left:0" />
+
+<ol start="5">
+<li>配置反向代理（<strong>替服务器接收请求，转发请求</strong>）</li>
+</ol>
+<img src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/image-20230128030745898.png" alt="image-20230128030745898" style="zoom:67%;margin-left:0" />
+
+<ol start="6">
+<li><strong>nginx 统一接受请求，转发请求</strong></li>
+</ol>
+<h3 id="Vercel-绑定域名"><a href="#Vercel-绑定域名" class="headerlink" title="Vercel 绑定域名"></a>Vercel 绑定域名</h3><h2 id="跨域问题解决"><a href="#跨域问题解决" class="headerlink" title="跨域问题解决"></a>跨域问题解决</h2><p><strong>跨域问题产生原因</strong></p>
+<blockquote>
+<p>浏览器为了用户的安全，仅允许向 <strong>同域名、同端口</strong> 的服务器发送请求。</p>
+</blockquote>
+<p>&#x3D;&#x3D;<strong>为了检测跨域 -&gt; 浏览器会在发送正式请求之前 -&gt; 发送预检请求 [OPTIONS] -&gt; 预检请求的请求类型是 [OPTIONS] -&gt; 预检请求的作用是提前探路</strong>&#x3D;&#x3D;</p>
+<p><em>什么情况下会发送预检请求？</em></p>
+<ol>
+<li>检查是否跨域</li>
+<li>请求域名与当前网页域名、端口冲突的时候 -&gt; 发送预检请求</li>
+</ol>
+<p><strong>TODO什么情况下会发送预检请求</strong></p>
+<p><strong>解决跨域 -&gt; 让服务器告诉浏览器：允许跨域（返回 cross-origin-allow 响应头）</strong></p>
+<ol>
+<li>把域名、端口改成相同的</li>
+</ol>
+<p><strong>让服务器告诉浏览器：允许跨域（返回 cross-origin-allow 响应头）</strong></p>
+<ol start="2">
+<li>网关支持（Nginx）</li>
+</ol>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">location</span><span class="regexp"> ^~</span> /api/ &#123;</span><br><span class="line">    <span class="attribute">proxy_pass</span> http://127.0.0.1:8080/api/;</span><br><span class="line">    <span class="attribute">add_header</span> <span class="string">&#x27;Access-Control-Allow-Origin&#x27;</span> <span class="variable">$http_origin</span>;</span><br><span class="line">    <span class="attribute">add_header</span> <span class="string">&#x27;Access-Control-Allow-Credentials&#x27;</span> <span class="string">&#x27;true&#x27;</span>;</span><br><span class="line">    <span class="attribute">add_header</span> Access-Control-Allow-Methods <span class="string">&#x27;GET, POST, OPTIONS&#x27;</span>;</span><br><span class="line">    <span class="attribute">add_header</span> Access-Control-Allow-Headers <span class="string">&#x27;*&#x27;</span>;</span><br><span class="line">    <span class="attribute">if</span> (<span class="variable">$request_method</span> = <span class="string">&#x27;OPTIONS&#x27;</span>) &#123;</span><br><span class="line">        <span class="attribute">add_header</span> <span class="string">&#x27;Access-Control-Allow-Credentials&#x27;</span> <span class="string">&#x27;true&#x27;</span>;</span><br><span class="line">        <span class="attribute">add_header</span> <span class="string">&#x27;Access-Control-Allow-Origin&#x27;</span> <span class="variable">$http_origin</span>;</span><br><span class="line">        <span class="attribute">add_header</span> <span class="string">&#x27;Access-Control-Allow-Methods&#x27;</span> <span class="string">&#x27;GET, POST, OPTIONS&#x27;</span>;</span><br><span class="line">        <span class="attribute">add_header</span> <span class="string">&#x27;Access-Control-Allow-Headers&#x27;</span> <span class="string">&#x27;DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range&#x27;</span>;</span><br><span class="line">        <span class="attribute">add_header</span> <span class="string">&#x27;Access-Control-Max-Age&#x27;</span> <span class="number">1728000</span>;</span><br><span class="line">        <span class="attribute">add_header</span> <span class="string">&#x27;Content-Type&#x27;</span> <span class="string">&#x27;text/plain; charset=utf-8&#x27;</span>;</span><br><span class="line">        <span class="attribute">add_header</span> <span class="string">&#x27;Content-Length&#x27;</span> <span class="number">0</span>;</span><br><span class="line">        <span class="attribute">return</span> <span class="number">204</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：尽量不要使用</strong></p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">add_header</span> Access-Control-Allow-Origin *;</span><br></pre></td></tr></table></figure>
+
+<p><strong><code>*</code> 虽然能允许所有域名跨域，但是不能与 withCredentials 自动带 cookie 的请求头 同时使用</strong></p>
+<p>如果要允许所有请求跨域 -&gt; 可以使用 <code>$http_origin </code> -&gt; 来代替 <code>*</code> 允许全部的选项</p>
+<p><strong>注意 nginx 配置中 预检请求也要加上 允许 <code>$http_origin</code></strong></p>
+<p>&#x3D;&#x3D;<strong>如果要在网关进行请求过滤 -&gt; 可以在 nginx 中加上 if -&gt; 来判断是否需要拦截该请求</strong>&#x3D;&#x3D;</p>
+<ol start="3">
+<li>修改后端服务<ol>
+<li>配置 @CrossOrigin 注解 <code>@CrossOrigin(origins = &#123; &quot;http://xxx.xxx.cn&quot; &#125;, methods = &#123; RequestMethod.DELETE, RequestMethod.POST &#125;)</code></li>
+<li>添加 web 全局请求拦截器</li>
+</ol>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">WebMvcConfg</span> <span class="keyword">implements</span> <span class="title class_">WebMvcConfigurer</span> &#123;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addCorsMappings</span><span class="params">(CorsRegistry registry)</span> &#123;</span><br><span class="line">        <span class="comment">//设置允许跨域的路径</span></span><br><span class="line">        registry.addMapping(<span class="string">&quot;/**&quot;</span>)</span><br><span class="line">                <span class="comment">//设置允许跨域请求的域名</span></span><br><span class="line">                <span class="comment">//当**Credentials为true时，**Origin不能为星号，需为具体的ip地址【如果接口不带cookie,ip无需设成具体ip】</span></span><br><span class="line">                .allowedOrigins(<span class="string">&quot;http://localhost:9527&quot;</span>, <span class="string">&quot;http://127.0.0.1:9527&quot;</span>, <span class="string">&quot;http://127.0.0.1:8082&quot;</span>, <span class="string">&quot;http://127.0.0.1:8083&quot;</span>)</span><br><span class="line">                <span class="comment">//是否允许证书 不再默认开启</span></span><br><span class="line">                .allowCredentials(<span class="literal">true</span>)</span><br><span class="line">                <span class="comment">//设置允许的方法</span></span><br><span class="line">                .allowedMethods(<span class="string">&quot;*&quot;</span>)</span><br><span class="line">                <span class="comment">//跨域允许时间</span></span><br><span class="line">                .maxAge(<span class="number">3600</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>较推荐</strong></p>
+<ol start="4">
+<li>定义新的 corsFilter Bean，参考：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/b02099a435bd">https://www.jianshu.com/p/b02099a435bd</a></li>
+</ol>
+<h3 id="把域名、端口改成相同的"><a href="#把域名、端口改成相同的" class="headerlink" title="把域名、端口改成相同的"></a>把域名、端口改成相同的</h3><p><strong>让服务器告诉浏览器：允许跨域（返回 cross-origin-allow 响应头）</strong></p>
+<h3 id="网关支持（Nginx）"><a href="#网关支持（Nginx）" class="headerlink" title="网关支持（Nginx）"></a>网关支持（Nginx）</h3><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">location</span><span class="regexp"> ^~</span> /api/ &#123;</span><br><span class="line">    <span class="attribute">proxy_pass</span> http://127.0.0.1:8080/api/;</span><br><span class="line">    <span class="attribute">add_header</span> <span class="string">&#x27;Access-Control-Allow-Origin&#x27;</span> <span class="variable">$http_origin</span>;</span><br><span class="line">    <span class="attribute">add_header</span> <span class="string">&#x27;Access-Control-Allow-Credentials&#x27;</span> <span class="string">&#x27;true&#x27;</span>;</span><br><span class="line">    <span class="attribute">add_header</span> Access-Control-Allow-Methods <span class="string">&#x27;GET, POST, OPTIONS&#x27;</span>;</span><br><span class="line">    <span class="attribute">add_header</span> Access-Control-Allow-Headers <span class="string">&#x27;*&#x27;</span>;</span><br><span class="line">    <span class="attribute">if</span> (<span class="variable">$request_method</span> = <span class="string">&#x27;OPTIONS&#x27;</span>) &#123;</span><br><span class="line">        <span class="attribute">add_header</span> <span class="string">&#x27;Access-Control-Allow-Credentials&#x27;</span> <span class="string">&#x27;true&#x27;</span>;</span><br><span class="line">        <span class="attribute">add_header</span> <span class="string">&#x27;Access-Control-Allow-Origin&#x27;</span> <span class="variable">$http_origin</span>;</span><br><span class="line">        <span class="attribute">add_header</span> <span class="string">&#x27;Access-Control-Allow-Methods&#x27;</span> <span class="string">&#x27;GET, POST, OPTIONS&#x27;</span>;</span><br><span class="line">        <span class="attribute">add_header</span> <span class="string">&#x27;Access-Control-Allow-Headers&#x27;</span> <span class="string">&#x27;DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range&#x27;</span>;</span><br><span class="line">        <span class="attribute">add_header</span> <span class="string">&#x27;Access-Control-Max-Age&#x27;</span> <span class="number">1728000</span>;</span><br><span class="line">        <span class="attribute">add_header</span> <span class="string">&#x27;Content-Type&#x27;</span> <span class="string">&#x27;text/plain; charset=utf-8&#x27;</span>;</span><br><span class="line">        <span class="attribute">add_header</span> <span class="string">&#x27;Content-Length&#x27;</span> <span class="number">0</span>;</span><br><span class="line">        <span class="attribute">return</span> <span class="number">204</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="修改后端服务"><a href="#修改后端服务" class="headerlink" title="修改后端服务"></a>修改后端服务</h3><p><strong>后端提供跨域支持</strong></p>
+<h4 id="CrossOrigin"><a href="#CrossOrigin" class="headerlink" title="@CrossOrigin"></a>@CrossOrigin</h4><p><code>@CrossOrigin(origins = &#123; &quot;http://xxx.xxx.cn&quot; &#125;, methods = &#123; RequestMethod.DELETE, RequestMethod.POST &#125;)</code></p>
+<h4 id="web-全局请求拦截器"><a href="#web-全局请求拦截器" class="headerlink" title="web 全局请求拦截器"></a>web 全局请求拦截器</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">WebMvcConfg</span> <span class="keyword">implements</span> <span class="title class_">WebMvcConfigurer</span> &#123;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addCorsMappings</span><span class="params">(CorsRegistry registry)</span> &#123;</span><br><span class="line">        <span class="comment">//设置允许跨域的路径</span></span><br><span class="line">        registry.addMapping(<span class="string">&quot;/**&quot;</span>)</span><br><span class="line">                <span class="comment">//设置允许跨域请求的域名</span></span><br><span class="line">                <span class="comment">//当**Credentials为true时，**Origin不能为星号，需为具体的ip地址【如果接口不带cookie,ip无需设成具体ip】</span></span><br><span class="line">                .allowedOrigins(<span class="string">&quot;http://localhost:9527&quot;</span>, <span class="string">&quot;http://127.0.0.1:9527&quot;</span>, <span class="string">&quot;http://127.0.0.1:8082&quot;</span>, <span class="string">&quot;http://127.0.0.1:8083&quot;</span>)</span><br><span class="line">                <span class="comment">//是否允许证书 不再默认开启</span></span><br><span class="line">                .allowCredentials(<span class="literal">true</span>)</span><br><span class="line">                <span class="comment">//设置允许的方法</span></span><br><span class="line">                .allowedMethods(<span class="string">&quot;*&quot;</span>)</span><br><span class="line">                <span class="comment">//跨域允许时间</span></span><br><span class="line">                .maxAge(<span class="number">3600</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="定义新的-corsFilter-Bean"><a href="#定义新的-corsFilter-Bean" class="headerlink" title="定义新的 corsFilter Bean"></a>定义新的 corsFilter Bean</h3><p>参考：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/b02099a435bd">https://www.jianshu.com/p/b02099a435bd</a></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>Linyuxuan
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="https://negativefunction.github.io/2023/01/28/ProjectDeployDocument/" title="项目部署文档">https://negativefunction.github.io/2023/01/28/ProjectDeployDocument/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/01/21/JUC/" rel="prev" title="JUC">
+      <i class="fa fa-chevron-left"></i> JUC
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E6%96%87%E6%A1%A3"><span class="nav-number">1.</span> <span class="nav-text">项目部署文档</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E7%94%9F%E6%96%B9%E5%BC%8F"><span class="nav-number">1.1.</span> <span class="nav-text">原生方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF"><span class="nav-number">1.1.1.</span> <span class="nav-text">前端</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Nginx"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">Nginx</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8E%E7%AB%AF"><span class="nav-number">1.1.2.</span> <span class="nav-text">后端</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9D%E5%A1%94Linux"><span class="nav-number">1.2.</span> <span class="nav-text">宝塔Linux</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-Nginx"><span class="nav-number">1.2.1.</span> <span class="nav-text">安装 Nginx</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85java"><span class="nav-number">1.2.2.</span> <span class="nav-text">安装java</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%AB%99%E5%B8%83%E7%BD%AE"><span class="nav-number">1.2.3.</span> <span class="nav-text">网站布置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.4.</span> <span class="nav-text">配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8E%E7%AB%AF%E9%83%A8%E7%BD%B2"><span class="nav-number">1.2.5.</span> <span class="nav-text">后端部署</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker%E5%AE%B9%E5%99%A8"><span class="nav-number">1.3.</span> <span class="nav-text">Docker容器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-Docker"><span class="nav-number">1.3.1.</span> <span class="nav-text">安装 Docker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%B6%E4%BD%9C-Dockerfile"><span class="nav-number">1.3.2.</span> <span class="nav-text">制作 Dockerfile</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B9%E6%8D%AE-Dockerfile-%E6%9E%84%E5%BB%BA%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.3.3.</span> <span class="nav-text">根据 Dockerfile 构建对象</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2"><span class="nav-number">1.4.</span> <span class="nav-text">容器平台部署</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%85%BE%E8%AE%AF%E4%BA%91"><span class="nav-number">1.4.1.</span> <span class="nav-text">腾讯云</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%BF%E9%87%8C%E4%BA%91"><span class="nav-number">1.4.2.</span> <span class="nav-text">阿里云</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%AB%AFwebify"><span class="nav-number">1.4.3.</span> <span class="nav-text">前端webify</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8E%E7%AB%AF%E5%BE%AE%E4%BF%A1%E4%BA%91%E6%89%98%E7%AE%A1"><span class="nav-number">1.4.4.</span> <span class="nav-text">后端微信云托管</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2"><span class="nav-number">1.4.4.1.</span> <span class="nav-text">前端部署</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%8E%E7%AB%AF%E9%83%A8%E7%BD%B2-1"><span class="nav-number">1.4.4.2.</span> <span class="nav-text">后端部署</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vercel"><span class="nav-number">1.4.5.</span> <span class="nav-text">Vercel</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Vercel%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2"><span class="nav-number">1.4.5.1.</span> <span class="nav-text">Vercel前端部署</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%8E%E7%AB%AF%E5%BE%AE%E4%BF%A1%E4%BA%91%E6%89%98%E7%AE%A1-1"><span class="nav-number">1.4.5.2.</span> <span class="nav-text">后端微信云托管</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%91%E5%AE%9A%E5%9F%9F%E5%90%8D"><span class="nav-number">1.5.</span> <span class="nav-text">绑定域名</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BT%E7%BB%91%E5%AE%9A%E5%9F%9F%E5%90%8D"><span class="nav-number">1.5.1.</span> <span class="nav-text">BT绑定域名</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%89%8D%E7%AB%AF%E5%9F%9F%E5%90%8D"><span class="nav-number">1.5.1.1.</span> <span class="nav-text">配置前端域名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%90%8E%E7%AB%AF%E5%9F%9F%E5%90%8D"><span class="nav-number">1.5.1.2.</span> <span class="nav-text">配置后端域名</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vercel-%E7%BB%91%E5%AE%9A%E5%9F%9F%E5%90%8D"><span class="nav-number">1.5.2.</span> <span class="nav-text">Vercel 绑定域名</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3"><span class="nav-number">1.6.</span> <span class="nav-text">跨域问题解决</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%8A%E5%9F%9F%E5%90%8D%E3%80%81%E7%AB%AF%E5%8F%A3%E6%94%B9%E6%88%90%E7%9B%B8%E5%90%8C%E7%9A%84"><span class="nav-number">1.6.1.</span> <span class="nav-text">把域名、端口改成相同的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E5%85%B3%E6%94%AF%E6%8C%81%EF%BC%88Nginx%EF%BC%89"><span class="nav-number">1.6.2.</span> <span class="nav-text">网关支持（Nginx）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.6.3.</span> <span class="nav-text">修改后端服务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CrossOrigin"><span class="nav-number">1.6.3.1.</span> <span class="nav-text">@CrossOrigin</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#web-%E5%85%A8%E5%B1%80%E8%AF%B7%E6%B1%82%E6%8B%A6%E6%88%AA%E5%99%A8"><span class="nav-number">1.6.3.2.</span> <span class="nav-text">web 全局请求拦截器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E6%96%B0%E7%9A%84-corsFilter-Bean"><span class="nav-number">1.6.4.</span> <span class="nav-text">定义新的 corsFilter Bean</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Linyuxuan"
+      src="https://xingqiu-tuchuang-1256524210.cos.ap-shanghai.myqcloud.com/252/05.jpg">
+  <p class="site-author-name" itemprop="name">Linyuxuan</p>
+  <div class="site-description" itemprop="description">Hope Sometimes Love Brain</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa-gift"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Linyuxuan</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+
+    </div>
+</body>
+</html>
